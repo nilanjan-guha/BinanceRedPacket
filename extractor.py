@@ -1,44 +1,44 @@
 import re
 from typing import List, Set
 
-# Standard Binance Crypto Box format: exactly 8 uppercase alphanumeric characters
-# Examples often look like BPXXXXXX or generic 8 chars e.g. 7U39XKL2, BPU9QW1Z
-CRYPTOBOX_REGEX = re.compile(r'\b[A-Za-z0-9]{8}\b')
+# Regex matches:
+# 1. Standard 8-character uppercase Crypto Box codes (e.g. BP88ZKL9, 7XQ12WAA)
+# 2. Direct Binance share links (e.g. s.binance.com/xxxxxx or binance.com/en/my/wallet/account/payment/cryptobox?code=XXXXX)
+CODE_REGEX = re.compile(r'\b[A-Za-z0-9]{8}\b')
+BINANCE_LINK_REGEX = re.compile(r'(?:s\.binance\.com/([A-Za-z0-9]+)|code=([A-Za-z0-9]{8}))', re.IGNORECASE)
 
-# Words to filter out common 8-character false positives in English/Crypto chat
 EXCLUDED_WORDS: Set[str] = {
     "ETHEREUM", "BINANCEE", "TRANSFER", "AIRDROPS", "BITCOINS", 
     "WITHDRAW", "DEPOSITS", "DISCOUNT", "VOUCHERS", "TELEGRAM",
     "RECEIVED", "SENDINGS", "EXCHANGE", "CAMPAIGN", "PLATFORM",
     "REMINDER", "REGISTER", "SECURITY", "PASSWORD", "SETTINGS",
-    "ACTIVITY", "OFFICIAL", "ANNOUNCE", "TOMORROW", "YESTERDAY"
+    "ACTIVITY", "OFFICIAL", "ANNOUNCE", "TOMORROW", "YESTERDAY",
+    "COMPLETE", "QUESTION", "SCHEDULE", "STARTING", "DOWNLOAD"
 }
 
 def extract_codes(text: str) -> List[str]:
     """
-    Extracts potential 8-character Binance Crypto Box codes from input text.
-    Normalizes them to uppercase and discards common non-code dictionary words.
+    Extracts all Binance Crypto Box codes, including direct links and inline text.
     """
     if not text:
         return []
 
-    found = CRYPTOBOX_REGEX.findall(text)
     candidates = []
 
-    for code in found:
-        upper_code = code.upper()
-        # Filter out obvious dictionary words
-        if upper_code in EXCLUDED_WORDS:
-            continue
-        
-        # Crypto Box codes almost always contain at least one digit (or starts with 'BP')
-        # Pure alpha 8-letter English words (like CHATTING, MULTIPLE) are almost always false positives
-        has_digit = any(c.isdigit() for c in upper_code)
-        starts_with_bp = upper_code.startswith("BP")
-        
-        if not (has_digit or starts_with_bp):
-            continue
-            
-        candidates.append(upper_code)
+    # 1. Extract from direct binance short links (e.g. s.binance.com/xyz)
+    for m in BINANCE_LINK_REGEX.finditer(text):
+        link_code = m.group(1) or m.group(2)
+        if link_code:
+            candidates.append(link_code.upper())
 
-    return list(dict.fromkeys(candidates))  # Preserves order while deduplicating
+    # 2. Extract standard 8-character alphanumeric codes
+    found = CODE_REGEX.findall(text)
+    for code in found:
+        upper = code.upper()
+        if upper in EXCLUDED_WORDS:
+            continue
+        # Accept if starts with BP or has at least one number
+        if upper.startswith("BP") or any(c.isdigit() for c in upper):
+            candidates.append(upper)
+
+    return list(dict.fromkeys(candidates))
