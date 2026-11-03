@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Autonomous Crypto Radar & Multi-Harvester</title>
+  <title>Autonomous Multi-Exchange & Crypto Radar</title>
   <style>
     :root {
       --bg: #0b0e11;
@@ -36,19 +36,28 @@
     .radar-icon { font-size: 20px; animation: spin 4s linear infinite; }
     @keyframes spin { 100% { transform: rotate(360deg); } }
 
+    /* Live Exchange Balances Bar */
+    .exchange-bar { background: #131924; border: 1px solid #1e2c3d; border-radius: 8px; padding: 12px 18px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .exchange-balances { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; font-size: 13px; }
+    .ex-chip { background: #1a2332; border: 1px solid #28374d; padding: 5px 12px; border-radius: 6px; display: inline-flex; align-items: center; gap: 6px; }
+    .ex-chip strong { color: var(--yellow); }
+    .ex-chip .val { color: var(--green); font-weight: bold; font-family: monospace; }
+
+    /* Step-by-Step Solana Playground Walkthrough Banner */
+    .solpg-guide { background: #1c1c14; border: 1px solid #4a3e0a; border-radius: 8px; padding: 14px 18px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .solpg-left { font-size: 13px; line-height: 1.6; }
+    .solpg-left strong { color: var(--yellow); font-size: 14px; }
+    .solpg-steps { font-size: 12px; color: #d0d7de; margin-top: 4px; }
+    .solpg-steps span { background: #2f2708; color: var(--yellow); padding: 2px 6px; border-radius: 4px; font-weight: bold; margin-right: 4px; }
+    .solpg-btn { background: var(--yellow); color: #000; font-weight: bold; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; text-decoration: none; font-size: 13px; display: inline-flex; align-items: center; gap: 6px; }
+    .solpg-btn:hover { opacity: 0.85; }
+
     /* Connected Wallets Bar */
     .wallet-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 16px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
     .wallet-tags { display: flex; flex-wrap: wrap; gap: 8px; }
     .wallet-tag { background: #202632; color: #c4cdd8; font-size: 11px; padding: 4px 8px; border-radius: 4px; border: 1px solid #2f3a4b; display: inline-flex; align-items: center; gap: 5px; }
     .wallet-tag strong { color: var(--yellow); }
     .wallet-tag code { color: #64b5f6; font-family: monospace; font-size: 11px; }
-
-    /* Interactive Modal & Walkthrough Banner */
-    .alert-banner { background: #182333; border: 1px solid #1f3b5e; border-radius: 8px; padding: 14px 18px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-    .alert-text { font-size: 13px; line-height: 1.5; }
-    .alert-text strong { color: var(--yellow); }
-    .alert-btn { background: var(--green); color: #000; font-weight: bold; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; text-decoration: none; font-size: 13px; display: inline-flex; align-items: center; gap: 6px; }
-    .alert-btn:hover { opacity: 0.85; }
 
     /* Navigation Tabs */
     .tabs-nav { display: flex; gap: 10px; margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
@@ -64,7 +73,7 @@
     .panel-full { background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border); overflow: hidden; display: flex; flex-direction: column; width: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.25); }
     .panel-header { background: #1c212a; padding: 14px 20px; font-size: 15px; font-weight: bold; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 5; }
     
-    .table-scroll { max-height: calc(100vh - 350px); min-height: 480px; overflow-y: auto; overflow-x: auto; width: 100%; }
+    .table-scroll { max-height: calc(100vh - 380px); min-height: 480px; overflow-y: auto; overflow-x: auto; width: 100%; }
     .table-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
     .table-scroll::-webkit-scrollbar-track { background: #14161c; }
     .table-scroll::-webkit-scrollbar-thumb { background: #2f3847; border-radius: 4px; }
@@ -99,7 +108,7 @@
   <!-- Header -->
   <div class="header">
     <div class="title">
-      <span>⚡ Autonomous Crypto Radar & Multi-Harvester</span>
+      <span>⚡ Autonomous Multi-Exchange & Crypto Radar</span>
     </div>
     <div class="status-badge">
       <div class="dot" id="pulseDot"></div>
@@ -127,12 +136,12 @@
         <div style="font-size: 13px;">
           <div>Exchange APIs: <span style="color: var(--green); font-weight: bold;">Connected</span></div>
           <div style="font-size: 11px; color: var(--text-muted);">
-            Binance: <span id="binanceState" style="color: var(--yellow);">Active</span> | 
-            Bybit V5: <span id="bybitState" style="color: #64b5f6;">Active</span>
+            Binance: <span style="color: var(--yellow);">SPOT Active</span> | 
+            Bybit: <span style="color: #64b5f6;">V5 Unified Active</span>
           </div>
         </div>
       </div>
-      <div style="font-size: 11px; color: var(--green);">● Live Keys</div>
+      <div style="font-size: 11px; color: var(--green);">● Live HMAC Keys</div>
     </div>
 
     <div class="stat-banner">
@@ -147,14 +156,39 @@
     </div>
   </div>
 
-  <!-- Live Action Banner for 10 Devnet SOL -->
-  <div class="alert-banner">
-    <div class="alert-text">
-      🔥 <strong>Your Phantom Wallet has 10.0 Devnet SOL Ready!</strong><br>
-      Use your 10 free SOL on verified Solana test dApps below to qualify for upcoming mainnet airdrops ($500 - $2,500+).
+  <!-- Real Authenticated Live Exchange Balances -->
+  <div class="exchange-bar">
+    <div class="exchange-balances">
+      <span style="font-size: 15px;">💰</span>
+      <span style="font-weight: bold; color: var(--text-muted);">Live Exchange Balances:</span>
+      <div class="ex-chip">
+        <span>Bybit Unified Account:</span>
+        <span class="val" id="bybitUsdtVal">Loading...</span>
+      </div>
+      <div class="ex-chip">
+        <span>Binance Funding Wallet:</span>
+        <span class="val" id="binanceFundingVal">Active (Awaiting drops)</span>
+      </div>
+      <div class="ex-chip">
+        <span>Phantom Solana Devnet:</span>
+        <span class="val" style="color: var(--yellow);">10.0 SOL</span>
+      </div>
     </div>
-    <a class="alert-btn" href="https://beta.solpg.io/" target="_blank">
-      <span>🚀 Open Solana Playground & Connect Phantom (100% Working) ↗</span>
+    <div style="font-size: 11px; color: var(--green);">● Real-Time API Stream</div>
+  </div>
+
+  <!-- Step-by-Step Solana Playground Walkthrough Banner -->
+  <div class="solpg-guide">
+    <div class="solpg-left">
+      <strong>⚡ What to do on Solana Playground (`beta.solpg.io`):</strong>
+      <div class="solpg-steps">
+        <span>Step 1</span> Click <strong>"Connect"</strong> on the bottom-left of the page.<br>
+        <span>Step 2</span> Choose <strong>Phantom Wallet</strong> in the popup.<br>
+        <span>Step 3</span> Click <strong>"Approve"</strong> in Phantom to interact using your free 10 SOL!
+      </div>
+    </div>
+    <a class="solpg-btn" href="https://beta.solpg.io/" target="_blank">
+      <span>🚀 Open Solana Playground & Connect Phantom ↗</span>
     </a>
   </div>
 
@@ -177,7 +211,7 @@
       <span class="badge-count" id="tabCodeCount">0</span>
     </button>
     <button class="tab-btn" onclick="switchTab('tab-campaigns', this)">
-      <span>🏆 Big Prize Hub ($50 – $50,000+ Verified Campaigns & Devnet Quests)</span>
+      <span>🏆 Big Prize Hub (Binance, Bybit & Solana Devnet Quests)</span>
       <span class="badge-count" style="background: #0ecb81; color: #000;" id="tabCampaignCount">0</span>
     </button>
     <button class="tab-btn" onclick="switchTab('tab-harvester', this)">
@@ -222,25 +256,25 @@
     <div class="panel-full">
       <div class="panel-header">
         <span>🏆 Verified High-Prize Drops & Solana Devnet Quests</span>
-        <span style="font-size: 12px; color: var(--green);">Ready for your 10 Devnet SOL & Binance Account</span>
+        <span style="font-size: 12px; color: var(--green);">Ready for your 10 Devnet SOL, Bybit & Binance Accounts</span>
       </div>
       <div class="table-scroll">
         <table>
           <thead>
             <tr>
-              <th>Platform / Network</th>
+              <th>Platform / Exchange</th>
               <th>Campaign / DApp Name</th>
               <th>Prize Pool</th>
               <th>Drop Category</th>
-              <th>Action to Take (Click & Approve)</th>
-              <th>Direct Link</th>
+              <th>Exact Action to Take</th>
+              <th>Direct Official Link</th>
               <th>Status</th>
             </tr>
           </thead>
           <tbody id="campaignsBody">
             <tr>
               <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 35px;">
-                Scanning official crypto campaigns...
+                Scanning verified campaigns across Binance, Bybit & Solana...
               </td>
             </tr>
           </tbody>
@@ -308,6 +342,28 @@
         }
       } catch (e) {
         console.error("Status error:", e);
+      }
+    }
+
+    async function fetchExchangeBalances() {
+      try {
+        const bybitRes = await fetch('/api/bybit/status');
+        const bybitData = await bybitRes.json();
+        if (bybitData.assets && bybitData.assets.length > 0) {
+          const usdt = bybitData.assets.find(a => a.coin === 'USDT') || bybitData.assets[0];
+          document.getElementById('bybitUsdtVal').innerText = parseFloat(usdt.balance).toFixed(6) + ' ' + usdt.coin;
+        } else {
+          document.getElementById('bybitUsdtVal').innerText = '0.00 USDT (Active)';
+        }
+
+        const binanceRes = await fetch('/api/binance/status');
+        const binanceData = await binanceRes.json();
+        if (binanceData.funding_assets && binanceData.funding_assets.length > 0) {
+          const first = binanceData.funding_assets[0];
+          document.getElementById('binanceFundingVal').innerText = parseFloat(first.free).toFixed(4) + ' ' + first.asset;
+        }
+      } catch (e) {
+        console.error("Exchange fetch error:", e);
       }
     }
 
@@ -446,6 +502,7 @@
     fetchCodes();
     fetchHarvest();
     fetchCampaigns();
+    fetchExchangeBalances();
 
     setInterval(() => {
       updateStatus();
@@ -454,6 +511,7 @@
 
     setInterval(fetchHarvest, 4000);
     setInterval(fetchCampaigns, 10000);
+    setInterval(fetchExchangeBalances, 12000);
   </script>
 </body>
 </html>

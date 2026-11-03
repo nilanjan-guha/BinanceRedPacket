@@ -99,3 +99,4 @@ class BybitOfficialClient:
                     return {"connected": False, "reason": data.get("retMsg")}
         except Exception as e:
             return {"connected": False, "reason": str(e)}
+

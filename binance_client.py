@@ -83,3 +83,4 @@ class BinanceOfficialClient:
                 }
         except Exception as e:
             return {"connected": False, "reason": str(e)}
+

@@ -57,3 +57,4 @@ class WebRedPacketScraper:
                     new_codes.append(code)
 
         return new_codes
+
