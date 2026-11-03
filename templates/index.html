@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Binance Red Packet Radar</title>
+  <style>
+    :root {
+      --bg: #0b0e11;
+      --card-bg: #181a20;
+      --text: #eaecef;
+      --text-muted: #848e9c;
+      --yellow: #f0b90b;
+      --green: #0ecb81;
+      --red: #f6465d;
+      --blue: #1e88e5;
+      --border: #2b313a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 24px; }
+    
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+    .title { font-size: 22px; font-weight: bold; color: var(--yellow); display: flex; align-items: center; gap: 8px; }
+    
+    .status-badge { background: #202630; padding: 8px 16px; border-radius: 20px; font-size: 13px; color: var(--green); display: flex; align-items: center; gap: 8px; border: 1px solid var(--border); }
+    .dot { width: 10px; height: 10px; background: var(--green); border-radius: 50%; animation: pulse 1.2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(0.8); } }
+    
+    /* Live Banners */
+    .banner-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    @media (max-width: 800px) { .banner-grid { grid-template-columns: 1fr; } }
+
+    .scanner-banner { background: #1b2028; border: 1px solid #333a46; border-radius: 8px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .scanner-left { display: flex; align-items: center; gap: 10px; }
+    .radar-icon { font-size: 20px; animation: spin 4s linear infinite; }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    .scanner-text { font-size: 13px; }
+    .scanner-text span { color: var(--yellow); font-weight: 600; }
+    .scanner-meta { font-size: 12px; color: var(--text-muted); }
+
+    /* New Channels Joined Feed */
+    .join-banner { background: #162436; border: 1px solid #1e3a5f; border-radius: 8px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .join-left { display: flex; align-items: center; gap: 10px; }
+    .join-text { font-size: 13px; }
+    .join-text span { color: #64b5f6; font-weight: 600; }
+
+    /* Channels Tags Box */
+    .channels-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; margin-bottom: 20px; }
+    .channels-header { font-size: 12px; font-weight: bold; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: flex; justify-content: space-between; }
+    .channel-tags { display: flex; flex-wrap: wrap; gap: 6px; max-height: 100px; overflow-y: auto; }
+    .channel-tag { background: #242b35; color: #eaecef; font-size: 12px; padding: 4px 10px; border-radius: 4px; border: 1px solid #384252; display: inline-flex; align-items: center; gap: 6px; }
+    .channel-tag .user { color: #64b5f6; font-size: 11px; }
+    .channel-tag .time { color: var(--text-muted); font-size: 10px; }
+
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .stat-card { background: var(--card-bg); padding: 16px; border-radius: 8px; border: 1px solid var(--border); }
+    .stat-title { color: var(--text-muted); font-size: 12px; margin-bottom: 4px; text-transform: uppercase; }
+    .stat-val { font-size: 22px; font-weight: bold; }
+    
+    .table-container { background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border); overflow: hidden; }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th { background: #202630; padding: 14px; font-size: 13px; color: var(--text-muted); text-transform: uppercase; border-bottom: 1px solid var(--border); }
+    td { padding: 14px; border-bottom: 1px solid var(--border); font-size: 14px; }
+    tr:hover { background: #1e2329; }
+    
+    .code-chip { font-family: monospace; font-size: 16px; font-weight: bold; color: var(--yellow); background: #2b313a; padding: 4px 10px; border-radius: 4px; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 8px; }
+    .copy-btn { cursor: pointer; font-size: 12px; background: #3b424e; border: none; color: #fff; padding: 3px 8px; border-radius: 4px; font-weight: 500; }
+    .copy-btn:hover { background: var(--yellow); color: #000; }
+    
+    .badge { padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; display: inline-block; }
+    .badge-PENDING { background: rgba(240, 185, 11, 0.15); color: var(--yellow); }
+    .badge-CLAIMED { background: rgba(14, 203, 129, 0.15); color: var(--green); }
+    .badge-INVALID { background: rgba(246, 70, 93, 0.15); color: var(--red); }
+    
+    .actions { display: flex; gap: 8px; }
+    .btn { cursor: pointer; border: none; border-radius: 4px; padding: 6px 12px; font-size: 12px; font-weight: bold; transition: 0.2s; }
+    .btn-claim { background: var(--green); color: #000; }
+    .btn-claim:hover { opacity: 0.85; }
+    .btn-invalid { background: var(--red); color: #fff; }
+    .btn-invalid:hover { opacity: 0.85; }
+    .btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    .toast { position: fixed; bottom: 20px; right: 20px; background: var(--yellow); color: #000; padding: 10px 18px; border-radius: 6px; font-weight: bold; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">
+      <span>🎁 Binance Red Packet Radar</span>
+    </div>
+    <div class="status-badge">
+      <div class="dot" id="pulseDot"></div>
+      <span id="scannerStatus">Discovering & Connecting...</span>
+    </div>
+  </div>
+
+  <div class="banner-grid">
+    <!-- Message Scanning Bar -->
+    <div class="scanner-banner">
+      <div class="scanner-left">
+        <div class="radar-icon">📡</div>
+        <div class="scanner-text">
+          Messages Inspected: <span id="messagesCount">0</span>
+        </div>
+      </div>
+      <div class="scanner-meta">
+        Last message: <span id="lastChannel" style="color: #fff; font-weight: 500;">-</span> (<span id="lastTime" style="color: var(--yellow);">-</span>)
+      </div>
+    </div>
+
+    <!-- Auto-Discovery Joined Feed -->
+    <div class="join-banner">
+      <div class="join-left">
+        <div>🚀</div>
+        <div class="join-text">
+          Joined Channels: <span id="totalChannels">0</span>
+        </div>
+      </div>
+      <div class="scanner-meta">
+        Latest joined: <span id="lastJoined" style="color: #64b5f6; font-weight: 500;">-</span> (<span id="lastJoinedTime" style="color: #64b5f6;">-</span>)
+      </div>
+    </div>
+  </div>
+
+  <!-- Monitored Channels Box -->
+  <div class="channels-box">
+    <div class="channels-header">
+      <span>Auto-Joined Red Packet Channels & Groups</span>
+      <span style="color: var(--green);">● Active Scanner Feeds</span>
+    </div>
+    <div class="channel-tags" id="channelTags">
+      <span class="channel-tag" style="color: var(--text-muted);">Finding & joining red packet channels...</span>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-title">Total Codes Found</div>
+      <div class="stat-val" id="totalCount">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">Pending</div>
+      <div class="stat-val" style="color: var(--yellow)" id="pendingCount">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">Claimed</div>
+      <div class="stat-val" style="color: var(--green)" id="claimedCount">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">Invalid / Expired</div>
+      <div class="stat-val" style="color: var(--red)" id="invalidCount">0</div>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Detected Code</th>
+          <th>Source Channel</th>
+          <th>Found Exact Time</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="codesBody">
+        <tr>
+          <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 30px;">
+            Scanning channels... incoming Red Packet codes will appear here in real-time.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="toast" id="toast">Copied to clipboard!</div>
+
+  <script>
+    async function updateStatus() {
+      try {
+        const res = await fetch('/api/status');
+        const st = await res.json();
+        document.getElementById('scannerStatus').innerText = st.status;
+        document.getElementById('messagesCount').innerText = st.messages_scanned;
+        document.getElementById('lastChannel').innerText = st.last_message_channel;
+        document.getElementById('lastTime').innerText = st.last_message_time;
+        document.getElementById('totalChannels').innerText = st.total_monitored || 0;
+        document.getElementById('lastJoined').innerText = st.last_joined_channel || '-';
+        document.getElementById('lastJoinedTime').innerText = st.last_joined_time || '-';
+
+        const tagsContainer = document.getElementById('channelTags');
+        if (st.monitored_channels && st.monitored_channels.length > 0) {
+          tagsContainer.innerHTML = st.monitored_channels.map(ch => `
+            <span class="channel-tag">
+              <strong>${ch.title}</strong>
+              <span class="user">${ch.username}</span>
+              <span class="time">joined: ${ch.joined_at}</span>
+            </span>
+          `).join('');
+        }
+      } catch (e) {
+        console.error("Status error:", e);
+      }
+    }
+
+    async function fetchCodes() {
+      try {
+        const res = await fetch('/api/codes');
+        const data = await res.json();
+        render(data);
+      } catch (e) {
+        console.error("Fetch error:", e);
+      }
+    }
+
+    async function markCode(code, status) {
+      try {
+        await fetch('/api/mark', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code, status })
+        });
+        fetchCodes();
+      } catch (e) {
+        alert("Failed to update status: " + e);
+      }
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text);
+      const toast = document.getElementById('toast');
+      toast.innerText = 'Copied code ' + text + ' !';
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2000);
+    }
+
+    function render(items) {
+      const tbody = document.getElementById('codesBody');
+      let pending = 0, claimed = 0, invalid = 0;
+
+      items.forEach(i => {
+        if (i.status === 'PENDING') pending++;
+        else if (i.status === 'CLAIMED') claimed++;
+        else if (i.status === 'INVALID') invalid++;
+      });
+
+      document.getElementById('totalCount').innerText = items.length;
+      document.getElementById('pendingCount').innerText = pending;
+      document.getElementById('claimedCount').innerText = claimed;
+      document.getElementById('invalidCount').innerText = invalid;
+
+      if (!items.length) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color: var(--text-muted); padding: 30px;">Scanning auto-joined channels... incoming codes will appear here in real-time.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = items.map(item => `
+        <tr>
+          <td>
+            <span class="code-chip">
+              ${item.code}
+              <button class="copy-btn" onclick="copyToClipboard('${item.code}')">Copy</button>
+            </span>
+          </td>
+          <td>${item.source || 'Telegram'}</td>
+          <td style="color: var(--yellow); font-family: monospace;">${item.timestamp}</td>
+          <td><span class="badge badge-${item.status}">${item.status}</span></td>
+          <td>
+            <div class="actions">
+              <button class="btn btn-claim" ${item.status === 'CLAIMED' ? 'disabled' : ''} onclick="markCode('${item.code}', 'CLAIMED')">✓ Mark Claimed</button>
+              <button class="btn btn-invalid" ${item.status === 'INVALID' ? 'disabled' : ''} onclick="markCode('${item.code}', 'INVALID')">✕ Mark Invalid</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    updateStatus();
+    fetchCodes();
+    setInterval(() => {
+      updateStatus();
+      fetchCodes();
+    }, 1500);
+  </script>
+</body>
+</html>

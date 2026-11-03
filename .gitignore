@@ -1,0 +1,20 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.session
+*.session-journal
+
+# Environment credentials (DO NOT COMMIT SECRETS)
+.env
+
+# Playwright browser user session & profile
+binance_browser_profile/
+
+# Local database / codes history
+codes_history.json
+
+# Virtual environment
+venv/
+.venv/
+env/
