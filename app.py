@@ -19,6 +19,7 @@ from auto_harvester import AutoHarvester
 from telegram_tipper import TelegramTipClaimer
 from web_scraper import WebRedPacketScraper
 from campaign_radar import BigPrizeRadar
+from binance_client import BinanceOfficialClient
 
 logging.basicConfig(
     level=logging.INFO,
@@ -37,6 +38,7 @@ harvester = AutoHarvester("harvest_history.json")
 tipper = TelegramTipClaimer("harvest_history.json")
 web_scraper = WebRedPacketScraper(storage)
 campaign_radar = BigPrizeRadar()
+binance_api = BinanceOfficialClient()
 app = FastAPI(title="Verified Crypto Radar & Ledger")
 
 TARGET_KEYWORDS = [
@@ -103,6 +105,13 @@ async def get_harvest_records():
 @app.get("/api/campaigns")
 async def get_high_value_campaigns():
     return campaign_radar.scan_all_high_value_campaigns()
+
+@app.get("/api/binance/status")
+async def get_binance_account():
+    return {
+        "status": binance_api.get_account_status(),
+        "funding_assets": binance_api.get_funding_wallet_balance()
+    }
 
 @app.post("/api/trigger-harvest")
 async def trigger_harvest_now():
