@@ -16,6 +16,9 @@ import uvicorn
 from extractor import extract_codes
 from storage import CodeManager
 from auto_harvester import AutoHarvester
+from telegram_tipper import TelegramTipClaimer
+from depin_worker import DePINWorker
+from airdrop_pinger import AirdropPinger
 
 logging.basicConfig(
     level=logging.INFO,
@@ -28,10 +31,14 @@ load_dotenv()
 API_ID = os.getenv("TELEGRAM_API_ID")
 API_HASH = os.getenv("TELEGRAM_API_HASH")
 PHONE = os.getenv("TELEGRAM_PHONE")
+PHANTOM_SOL = os.getenv("PHANTOM_SOL_WALLET", "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a")
 
 storage = CodeManager("codes_history.json")
 harvester = AutoHarvester("harvest_history.json")
-app = FastAPI(title="Binance & Automated Crypto Harvester")
+tipper = TelegramTipClaimer("harvest_history.json")
+depin = DePINWorker(sol_wallet=PHANTOM_SOL)
+pinger = AirdropPinger(sol_wallet=PHANTOM_SOL)
+app = FastAPI(title="Binance & Autonomous Multi-Crypto Harvester")
 
 TARGET_KEYWORDS = [
     "binance", "red packet", "redpacket", "cryptobox", "crypto box", 
@@ -180,16 +187,27 @@ async def dynamic_channel_discovery_loop(client: TelegramClient):
         await asyncio.sleep(600)
 
 async def recurring_auto_harvest_loop():
-    """Runs automated faucet & on-chain airdrop monitoring continuously every 60 seconds."""
+    """Runs automated faucet, DePIN heartbeat, and daily airdrop pings continuously."""
+    cycle_count = 0
     while True:
         try:
+            cycle_count += 1
             scan_state["harvest_status"] = "Active Scanning & Harvesting..."
             await harvester.run_faucet_auto_cycle()
+
+            # Every 2 minutes, sync DePIN passive points
+            if cycle_count % 2 == 0:
+                depin.sync_bandwidth_heartbeat(harvester)
+
+            # Every 5 minutes, record daily airdrop interaction ping
+            if cycle_count % 5 == 0:
+                pinger.execute_daily_ping(harvester)
+
             scan_state["harvest_status"] = "Continuous Scanner Active"
         except Exception as e:
             logger.error(f"Harvest loop error: {e}")
             scan_state["harvest_status"] = f"Scanner Error: {e}"
-        # Continuous scan every 60 seconds instead of waiting 3 hours
+        # Continuous scan every 60 seconds
         await asyncio.sleep(60)
 
 async def start_telegram_listener():
@@ -239,6 +257,11 @@ async def start_telegram_listener():
         scan_state["last_message_time"] = now_str
 
         text = event.message.message
+        
+        # 1. Check for Telegram inline tip buttons (Tip.cc / Cwallet) and auto-claim
+        if event.message.buttons:
+            await tipper.handle_message_buttons(event, harvester)
+
         if not text:
             return
 
