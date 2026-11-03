@@ -54,3 +54,4 @@ Mojo AI solves the fundamental UX barrier of DeFi:
 - **Official Portal:** [ChimpX Official Platform](https://superteam.fun/earn/listing/chimp-on-metaplex)
 - **Verified Smart Contract Architecture:** Metaplex audited fair launch contracts.
 - **Safety Directive:** Ensure interaction only occurs through official dApp domains to prevent phishing impersonators.
+
