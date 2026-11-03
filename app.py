@@ -15,8 +15,6 @@ import uvicorn
 
 from extractor import extract_codes
 from storage import CodeManager
-from airdrop_fetcher import AirdropManager
-from alchemy_manager import AlchemyManager
 
 logging.basicConfig(
     level=logging.INFO,
@@ -30,13 +28,7 @@ API_ID = os.getenv("TELEGRAM_API_ID")
 API_HASH = os.getenv("TELEGRAM_API_HASH")
 PHONE = os.getenv("TELEGRAM_PHONE")
 
-USER_ETH = os.getenv("USER_ETH_WALLET", "")
-USER_SOL = os.getenv("USER_SOLANA_WALLET", "")
-ALCHEMY_KEY = os.getenv("ALCHEMY_API_KEY", "")
-
 storage = CodeManager("codes_history.json")
-airdrop_mgr = AirdropManager()
-alchemy_mgr = AlchemyManager(api_key=ALCHEMY_KEY, eth_wallet=USER_ETH, sol_wallet=USER_SOL)
 app = FastAPI(title="Binance Red Packet Radar")
 
 # Channel filter keywords
@@ -58,7 +50,6 @@ SEED_CHANNELS = [
     "CryptoBoxesCode"
 ]
 
-# Search terms to dynamically find brand new public channels on Telegram
 DISCOVERY_SEARCH_QUERIES = [
     "Binance Red Packet",
     "Binance Crypto Box",
@@ -66,7 +57,7 @@ DISCOVERY_SEARCH_QUERIES = [
 ]
 
 monitored_dialog_ids = set()
-monitored_dialogs = []  # list of {"id": int, "title": str, "username": str, "joined_at": str}
+monitored_dialogs = []
 
 scan_state = {
     "status": "Initializing",
@@ -93,19 +84,6 @@ async def get_dashboard():
 async def get_system_status():
     return scan_state
 
-
-@app.get("/api/airdrops")
-async def get_active_airdrops():
-    return airdrop_mgr.get_active_testnets()
-
-@app.get("/api/faucets")
-async def get_faucets():
-    return {
-        "balance": alchemy_mgr.check_sepolia_balance(),
-        "faucets": alchemy_mgr.get_faucets_for_user(),
-        "wallets": {"eth": USER_ETH, "sol": USER_SOL}
-    }
-
 @app.get("/api/codes")
 async def get_codes():
     return storage.get_all()
@@ -123,7 +101,6 @@ def record_channel(entity, source_note: str = ""):
     cid = getattr(entity, 'id', None)
     if not cid:
         return
-    # Telethon channel IDs usually require the -100 prefix or raw id depending on event
     title = getattr(entity, 'title', None) or getattr(entity, 'first_name', '') or str(cid)
     username = getattr(entity, 'username', '') or ''
     now_str = datetime.now().strftime("%H:%M:%S")
@@ -144,7 +121,6 @@ def record_channel(entity, source_note: str = ""):
         logger.info(f"📌 [NEW CHANNEL ADDED TO SCANNER] {title} (@{username}) {source_note}")
 
 async def initial_load_existing_dialogs(client: TelegramClient):
-    """Filter user's existing joined chats for relevant ones."""
     logger.info("Scanning currently joined chats for Binance / Red Packet / Crypto Box...")
     async for dialog in client.iter_dialogs():
         title = dialog.name or ""
@@ -153,21 +129,16 @@ async def initial_load_existing_dialogs(client: TelegramClient):
             record_channel(dialog.entity, source_note="[Existing Dialog]")
 
 async def join_seed_channels(client: TelegramClient):
-    """Joins seed channels from the web."""
     for ch_name in SEED_CHANNELS:
         try:
             entity = await client.get_entity(ch_name)
             await client(JoinChannelRequest(entity))
             record_channel(entity, source_note="[Joined Seed]")
-            await asyncio.sleep(1.5)  # Telegram rate limit safety
+            await asyncio.sleep(1.5)
         except Exception as e:
             logger.debug(f"Could not join seed {ch_name}: {e}")
 
 async def dynamic_channel_discovery_loop(client: TelegramClient):
-    """
-    Periodically searches Telegram for new public channels matching
-    'Binance Red Packet' / 'Crypto Box' and auto-joins them, reporting to UI.
-    """
     while True:
         try:
             logger.info("🔎 Searching Telegram global directory for new Binance Red Packet channels...")
@@ -181,7 +152,6 @@ async def dynamic_channel_discovery_loop(client: TelegramClient):
                             
                             if is_relevant_channel(title, username) and chat.id not in monitored_dialog_ids:
                                 try:
-                                    # Join the newly discovered channel
                                     await client(JoinChannelRequest(chat))
                                     record_channel(chat, source_note="[Auto-Discovered & Joined]")
                                     await asyncio.sleep(2)
@@ -195,7 +165,6 @@ async def dynamic_channel_discovery_loop(client: TelegramClient):
         except Exception as loop_err:
             logger.error(f"Discovery loop error: {loop_err}")
 
-        # Re-check and search for new channels every 10 minutes
         await asyncio.sleep(600)
 
 async def start_telegram_listener():
@@ -209,26 +178,17 @@ async def start_telegram_listener():
 
     scan_state["status"] = "Discovering & Joining Red Packet Channels..."
 
-    # 1. Add matching channels user is already in
     await initial_load_existing_dialogs(client)
-
-    # 2. Join initial known web channels
     await join_seed_channels(client)
-
-    # 3. Launch background dynamic channel search & auto-join loop
     asyncio.create_task(dynamic_channel_discovery_loop(client))
 
     scan_state["status"] = "Active (Scanning Messages & Discovering Channels)"
 
     @client.on(events.NewMessage)
     async def handler(event):
-        # Only process if from a channel in our monitored list
-        # Check by chat_id or peer_id
         chat_id = event.chat_id
-        # Also check channel id without -100 prefix if needed
         is_monitored = (chat_id in monitored_dialog_ids) or (abs(chat_id) in monitored_dialog_ids)
 
-        # If not tracked yet, check if channel title/username is relevant and auto-add on the fly
         if not is_monitored:
             try:
                 chat = await event.get_chat()
@@ -274,7 +234,7 @@ async def main():
     server = uvicorn.Server(config)
     
     logger.info("=" * 60)
-    logger.info("🌐 Red Packet Radar is LIVE at: http://127.0.0.1:8000")
+    logger.info("🌐 Binance Red Packet Radar is LIVE at: http://127.0.0.1:8000")
     logger.info("=" * 60)
     
     await server.serve()
