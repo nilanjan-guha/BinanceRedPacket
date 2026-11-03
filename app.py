@@ -128,6 +128,13 @@ async def trigger_harvest_now():
     asyncio.create_task(harvester.run_faucet_auto_cycle())
     return {"status": "triggered"}
 
+@app.post("/api/solana-execute")
+async def execute_solana_devnet_tx():
+    """Triggers autonomous on-chain Devnet activity using Solana worker."""
+    from solana_worker import solana_worker
+    res = solana_worker.execute_test_transaction()
+    return res
+
 @app.post("/api/mark")
 async def mark_code_status(payload: MarkStatusRequest):
     storage.mark_status(payload.code, payload.status)

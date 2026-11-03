@@ -178,18 +178,25 @@
   </div>
 
   <!-- Step-by-Step Solana Playground Walkthrough Banner -->
-  <div class="solpg-guide">
+  <div class="solpg-guide" style="border-left: 4px solid #14F195;">
     <div class="solpg-left">
-      <strong>⚡ What to do on Solana Playground (`beta.solpg.io`):</strong>
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+        <strong style="color: #14F195;">⚡ Solana Devnet Activity & Airdrop Automation:</strong>
+        <span style="font-size: 11px; background: rgba(20, 241, 149, 0.15); color: #14F195; padding: 2px 6px; border-radius: 4px;">10.0 SOL Devnet Active</span>
+      </div>
       <div class="solpg-steps">
-        <span>Step 1</span> Click <strong>"Connect"</strong> on the bottom-left of the page.<br>
-        <span>Step 2</span> Choose <strong>Phantom Wallet</strong> in the popup.<br>
-        <span>Step 3</span> Click <strong>"Approve"</strong> in Phantom to interact using your free 10 SOL!
+        <span>Option 1 (1-Click Browser)</span> Open <a href="https://beta.solpg.io/" target="_blank" style="color: #14F195; text-decoration: underline;">beta.solpg.io</a> &rarr; Click <strong>"Connect"</strong> bottom-left &rarr; Select <strong>Phantom</strong> &rarr; Click <strong>"Test"</strong> &rarr; Approve popup!<br>
+        <span>Option 2 (Bot Autonomous)</span> Click <strong>"Execute Devnet Tx"</strong> &rarr; Bot broadcasts transaction directly via Solana RPC!
       </div>
     </div>
-    <a class="solpg-btn" href="https://beta.solpg.io/" target="_blank">
-      <span>🚀 Open Solana Playground & Connect Phantom ↗</span>
-    </a>
+    <div style="display: flex; gap: 10px; align-items: center;">
+      <button onclick="triggerSolanaAutonomousTx()" style="background: linear-gradient(135deg, #9945FF, #14F195); color: #000; font-weight: bold; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-size: 12px;">
+        🤖 Execute Devnet Tx
+      </button>
+      <a class="solpg-btn" href="https://beta.solpg.io/" target="_blank">
+        <span>🚀 Open Playground ↗</span>
+      </a>
+    </div>
   </div>
 
   <!-- Connected Wallets Bar -->
@@ -495,6 +502,33 @@
           </td>
         </tr>
       `).join('');
+    }
+
+    async function triggerSolanaAutonomousTx() {
+      try {
+        const btn = event.target;
+        const originalText = btn.innerText;
+        btn.innerText = "⏳ Broadcasting Tx...";
+        btn.disabled = true;
+
+        const res = await fetch('/api/solana-execute', { method: 'POST' });
+        const data = await res.json();
+
+        btn.innerText = originalText;
+        btn.disabled = false;
+
+        if (data.success) {
+          alert("✅ Solana Devnet Tx Executed & Verified On-Chain!\n\nTx Signature: " + data.signature + "\n\nExplorer: " + data.explorer_url);
+          fetchHarvest();
+        } else if (data.needs_key) {
+          alert("ℹ️ Autonomous Signing Info:\n\n" + data.msg + "\n\n👉 If you haven't exported your Phantom Devnet Private Key to .env, use 'Option 1: Open Playground' to approve with 1-click in your browser!");
+        } else {
+          alert("⚠️ Execution error: " + (data.error || data.msg));
+        }
+      } catch (e) {
+        console.error(e);
+        alert("Error contacting local server.");
+      }
     }
 
     // Auto-refresh loops
