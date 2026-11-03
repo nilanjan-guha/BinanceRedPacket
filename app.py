@@ -15,6 +15,7 @@ import uvicorn
 
 from extractor import extract_codes
 from storage import CodeManager
+from auto_harvester import AutoHarvester
 
 logging.basicConfig(
     level=logging.INFO,
@@ -29,15 +30,14 @@ API_HASH = os.getenv("TELEGRAM_API_HASH")
 PHONE = os.getenv("TELEGRAM_PHONE")
 
 storage = CodeManager("codes_history.json")
-app = FastAPI(title="Binance Red Packet Radar")
+harvester = AutoHarvester("harvest_history.json")
+app = FastAPI(title="Binance & Automated Crypto Harvester")
 
-# Channel filter keywords
 TARGET_KEYWORDS = [
     "binance", "red packet", "redpacket", "cryptobox", "crypto box", 
-    "box code", "giveaway", "airdrop"
+    "box code", "giveaway", "airdrop", "faucet", "drop"
 ]
 
-# Seed list of top known channels from the web
 SEED_CHANNELS = [
     "redpacketdrops",
     "binanceredpacketcoddes",
@@ -53,7 +53,8 @@ SEED_CHANNELS = [
 DISCOVERY_SEARCH_QUERIES = [
     "Binance Red Packet",
     "Binance Crypto Box",
-    "Red Packet Code"
+    "Crypto Box Code",
+    "Crypto Airdrop"
 ]
 
 monitored_dialog_ids = set()
@@ -68,6 +69,7 @@ scan_state = {
     "last_message_time": "-",
     "last_joined_channel": "-",
     "last_joined_time": "-",
+    "harvest_status": "Idle",
     "started_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 }
 
@@ -87,6 +89,16 @@ async def get_system_status():
 @app.get("/api/codes")
 async def get_codes():
     return storage.get_all()
+
+@app.get("/api/harvest")
+async def get_harvest_records():
+    return harvester.history
+
+@app.post("/api/trigger-harvest")
+async def trigger_harvest_now():
+    logger.info("Manual harvest cycle triggered!")
+    asyncio.create_task(harvester.run_faucet_auto_cycle())
+    return {"status": "triggered"}
 
 @app.post("/api/mark")
 async def mark_code_status(payload: MarkStatusRequest):
@@ -118,10 +130,10 @@ def record_channel(entity, source_note: str = ""):
         scan_state["total_monitored"] = len(monitored_dialogs)
         scan_state["last_joined_channel"] = f"{title} (@{username})" if username else title
         scan_state["last_joined_time"] = now_str
-        logger.info(f"📌 [NEW CHANNEL ADDED TO SCANNER] {title} (@{username}) {source_note}")
+        logger.info(f"📌 [NEW CHANNEL ADDED] {title} (@{username}) {source_note}")
 
 async def initial_load_existing_dialogs(client: TelegramClient):
-    logger.info("Scanning currently joined chats for Binance / Red Packet / Crypto Box...")
+    logger.info("Scanning currently joined chats for target keywords...")
     async for dialog in client.iter_dialogs():
         title = dialog.name or ""
         username = getattr(dialog.entity, "username", "") or ""
@@ -141,7 +153,6 @@ async def join_seed_channels(client: TelegramClient):
 async def dynamic_channel_discovery_loop(client: TelegramClient):
     while True:
         try:
-            logger.info("🔎 Searching Telegram global directory for new Binance Red Packet channels...")
             for query in DISCOVERY_SEARCH_QUERIES:
                 try:
                     result = await client(SearchRequest(q=query, limit=10))
@@ -165,7 +176,21 @@ async def dynamic_channel_discovery_loop(client: TelegramClient):
         except Exception as loop_err:
             logger.error(f"Discovery loop error: {loop_err}")
 
+        # Scan for new channels every 10 minutes
         await asyncio.sleep(600)
+
+async def recurring_auto_harvest_loop():
+    """Runs automated faucet & airdrop auto-claims every 3 hours."""
+    while True:
+        try:
+            scan_state["harvest_status"] = "Active Harvesting Cycle..."
+            await harvester.run_faucet_auto_cycle()
+            scan_state["harvest_status"] = "Scheduled (Next in 3h)"
+        except Exception as e:
+            logger.error(f"Harvest loop error: {e}")
+            scan_state["harvest_status"] = f"Error: {e}"
+        # Wait 3 hours
+        await asyncio.sleep(10800)
 
 async def start_telegram_listener():
     scan_state["status"] = "Connecting to Telegram..."
@@ -176,13 +201,16 @@ async def start_telegram_listener():
     else:
         await client.start()
 
-    scan_state["status"] = "Discovering & Joining Red Packet Channels..."
+    scan_state["status"] = "Discovering & Joining Channels..."
 
     await initial_load_existing_dialogs(client)
     await join_seed_channels(client)
     asyncio.create_task(dynamic_channel_discovery_loop(client))
 
-    scan_state["status"] = "Active (Scanning Messages & Discovering Channels)"
+    # Also launch recurring auto harvest worker
+    asyncio.create_task(recurring_auto_harvest_loop())
+
+    scan_state["status"] = "Active (Live Scanner + Auto Harvester)"
 
     @client.on(events.NewMessage)
     async def handler(event):
@@ -220,7 +248,7 @@ async def start_telegram_listener():
                 logger.info(f"✨ NEW CODE DETECTED: {code} from {chat_title}")
                 storage.add_code(code, source=chat_title)
 
-    logger.info("Telegram engine fully started and monitoring!")
+    logger.info("Telegram & Harvester engines running!")
     await client.run_until_disconnected()
 
 async def main():
@@ -234,7 +262,7 @@ async def main():
     server = uvicorn.Server(config)
     
     logger.info("=" * 60)
-    logger.info("🌐 Binance Red Packet Radar is LIVE at: http://127.0.0.1:8000")
+    logger.info("🌐 Automated Crypto Harvester is LIVE at: http://127.0.0.1:8000")
     logger.info("=" * 60)
     
     await server.serve()

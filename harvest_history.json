@@ -1,0 +1,38 @@
+[
+  {
+    "id": 4,
+    "timestamp": "2026-11-03 15:16:30",
+    "source": "Tron / BSC Faucet Scanner",
+    "network": "Tron Network",
+    "wallet": "TF2w8pfN2QfXP31ZG2Ju5K4fXVEtA8X33u",
+    "status": "ACTIVE",
+    "detail": "Address queued in Telegram tipper & faucet pool"
+  },
+  {
+    "id": 3,
+    "timestamp": "2026-11-03 15:16:30",
+    "source": "Automated Base / EVM Dispatcher",
+    "network": "Base / Ethereum",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "MONITORED",
+    "detail": "Wallet auto-registered for gas distributions & airdrop drops"
+  },
+  {
+    "id": 2,
+    "timestamp": "2026-11-03 15:16:27",
+    "source": "Solana Devnet RPC",
+    "network": "Solana Devnet",
+    "wallet": "FPYvcBK6j5z6diQhT6KaFEX5AVP7kbEiEQjiM3bvbEZP",
+    "status": "STANDBY",
+    "detail": "Network response: HTTP Error 410: Gone"
+  },
+  {
+    "id": 1,
+    "timestamp": "2026-11-03 15:16:24",
+    "source": "Solana Devnet RPC",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "STANDBY",
+    "detail": "Network response: HTTP Error 410: Gone"
+  }
+]
