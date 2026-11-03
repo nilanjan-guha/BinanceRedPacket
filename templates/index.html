@@ -323,14 +323,17 @@
 
     function renderCodes(items) {
       const tbody = document.getElementById('codesBody');
-      document.getElementById('totalCodesCount').innerText = items.length;
+      
+      // Filter out CLAIMED and INVALID codes: ONLY show active unclaimed (PENDING) codes!
+      const unclaimed = items.filter(item => item.status === 'PENDING' || !item.status);
+      document.getElementById('totalCodesCount').innerText = unclaimed.length;
 
-      if (!items.length) {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--text-muted); padding: 30px;">Scanning channels... codes appear here in real-time.</td></tr>`;
+      if (!unclaimed.length) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--text-muted); padding: 30px;">All detected codes have been claimed! Scanning channels for new drops...</td></tr>`;
         return;
       }
 
-      tbody.innerHTML = items.map(item => `
+      tbody.innerHTML = unclaimed.map(item => `
         <tr>
           <td>
             <span class="code-chip">
@@ -342,8 +345,8 @@
           <td style="color: var(--yellow); font-family: monospace; font-size: 12px;">${item.timestamp}</td>
           <td>
             <div class="actions">
-              <button class="btn btn-claim" ${item.status === 'CLAIMED' ? 'disabled' : ''} onclick="markCode('${item.code}', 'CLAIMED')">✓ Claimed</button>
-              <button class="btn btn-invalid" ${item.status === 'INVALID' ? 'disabled' : ''} onclick="markCode('${item.code}', 'INVALID')">✕ Invalid</button>
+              <button class="btn btn-claim" onclick="markCode('${item.code}', 'CLAIMED')">✓ Claim</button>
+              <button class="btn btn-invalid" onclick="markCode('${item.code}', 'INVALID')">✕ Invalid</button>
             </div>
           </td>
         </tr>

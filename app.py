@@ -180,17 +180,17 @@ async def dynamic_channel_discovery_loop(client: TelegramClient):
         await asyncio.sleep(600)
 
 async def recurring_auto_harvest_loop():
-    """Runs automated faucet & airdrop auto-claims every 3 hours."""
+    """Runs automated faucet & on-chain airdrop monitoring continuously every 60 seconds."""
     while True:
         try:
-            scan_state["harvest_status"] = "Active Harvesting Cycle..."
+            scan_state["harvest_status"] = "Active Scanning & Harvesting..."
             await harvester.run_faucet_auto_cycle()
-            scan_state["harvest_status"] = "Scheduled (Next in 3h)"
+            scan_state["harvest_status"] = "Continuous Scanner Active"
         except Exception as e:
             logger.error(f"Harvest loop error: {e}")
-            scan_state["harvest_status"] = f"Error: {e}"
-        # Wait 3 hours
-        await asyncio.sleep(10800)
+            scan_state["harvest_status"] = f"Scanner Error: {e}"
+        # Continuous scan every 60 seconds instead of waiting 3 hours
+        await asyncio.sleep(60)
 
 async def start_telegram_listener():
     scan_state["status"] = "Connecting to Telegram..."
