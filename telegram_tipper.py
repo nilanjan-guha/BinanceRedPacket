@@ -54,3 +54,4 @@ class TelegramTipClaimer:
                     except Exception as e:
                         logger.debug(f"Button click error: {e}")
         return False
+

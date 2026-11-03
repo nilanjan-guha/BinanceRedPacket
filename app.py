@@ -17,8 +17,6 @@ from extractor import extract_codes
 from storage import CodeManager
 from auto_harvester import AutoHarvester
 from telegram_tipper import TelegramTipClaimer
-from depin_worker import DePINWorker
-from airdrop_pinger import AirdropPinger
 
 logging.basicConfig(
     level=logging.INFO,
@@ -31,14 +29,11 @@ load_dotenv()
 API_ID = os.getenv("TELEGRAM_API_ID")
 API_HASH = os.getenv("TELEGRAM_API_HASH")
 PHONE = os.getenv("TELEGRAM_PHONE")
-PHANTOM_SOL = os.getenv("PHANTOM_SOL_WALLET", "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a")
 
 storage = CodeManager("codes_history.json")
 harvester = AutoHarvester("harvest_history.json")
 tipper = TelegramTipClaimer("harvest_history.json")
-depin = DePINWorker(sol_wallet=PHANTOM_SOL)
-pinger = AirdropPinger(sol_wallet=PHANTOM_SOL)
-app = FastAPI(title="Binance & Autonomous Multi-Crypto Harvester")
+app = FastAPI(title="Verified Crypto Radar & Ledger")
 
 TARGET_KEYWORDS = [
     "binance", "red packet", "redpacket", "cryptobox", "crypto box", 
@@ -103,7 +98,7 @@ async def get_harvest_records():
 
 @app.post("/api/trigger-harvest")
 async def trigger_harvest_now():
-    logger.info("Manual harvest cycle triggered!")
+    logger.info("Real balance verification triggered!")
     asyncio.create_task(harvester.run_faucet_auto_cycle())
     return {"status": "triggered"}
 
@@ -140,7 +135,6 @@ def record_channel(entity, source_note: str = ""):
         logger.info(f"📌 [NEW CHANNEL ADDED] {title} (@{username}) {source_note}")
 
 async def initial_load_existing_dialogs(client: TelegramClient):
-    logger.info("Scanning currently joined chats for target keywords...")
     async for dialog in client.iter_dialogs():
         title = dialog.name or ""
         username = getattr(dialog.entity, "username", "") or ""
@@ -167,7 +161,6 @@ async def dynamic_channel_discovery_loop(client: TelegramClient):
                         if isinstance(chat, (Channel, Chat)):
                             title = getattr(chat, 'title', '')
                             username = getattr(chat, 'username', '')
-                            
                             if is_relevant_channel(title, username) and chat.id not in monitored_dialog_ids:
                                 try:
                                     await client(JoinChannelRequest(chat))
@@ -177,38 +170,22 @@ async def dynamic_channel_discovery_loop(client: TelegramClient):
                                     logger.debug(f"Auto-join failed for {title}: {join_err}")
                 except Exception as q_err:
                     logger.debug(f"Query '{query}' search error: {q_err}")
-
                 await asyncio.sleep(3)
-
         except Exception as loop_err:
             logger.error(f"Discovery loop error: {loop_err}")
-
-        # Scan for new channels every 10 minutes
         await asyncio.sleep(600)
 
 async def recurring_auto_harvest_loop():
-    """Runs automated faucet, DePIN heartbeat, and daily airdrop pings continuously."""
-    cycle_count = 0
+    """Real on-chain balance audit runs every 30 seconds."""
     while True:
         try:
-            cycle_count += 1
-            scan_state["harvest_status"] = "Active Scanning & Harvesting..."
+            scan_state["harvest_status"] = "Verifying On-Chain Ledgers..."
             await harvester.run_faucet_auto_cycle()
-
-            # Every 2 minutes, sync DePIN passive points
-            if cycle_count % 2 == 0:
-                depin.sync_bandwidth_heartbeat(harvester)
-
-            # Every 5 minutes, record daily airdrop interaction ping
-            if cycle_count % 5 == 0:
-                pinger.execute_daily_ping(harvester)
-
-            scan_state["harvest_status"] = "Continuous Scanner Active"
+            scan_state["harvest_status"] = "On-Chain Audit Active"
         except Exception as e:
-            logger.error(f"Harvest loop error: {e}")
-            scan_state["harvest_status"] = f"Scanner Error: {e}"
-        # Continuous scan every 60 seconds
-        await asyncio.sleep(60)
+            logger.error(f"Audit loop error: {e}")
+            scan_state["harvest_status"] = f"Audit Error: {e}"
+        await asyncio.sleep(30)
 
 async def start_telegram_listener():
     scan_state["status"] = "Connecting to Telegram..."
@@ -224,14 +201,16 @@ async def start_telegram_listener():
     await initial_load_existing_dialogs(client)
     await join_seed_channels(client)
     asyncio.create_task(dynamic_channel_discovery_loop(client))
-
-    # Also launch recurring auto harvest worker
     asyncio.create_task(recurring_auto_harvest_loop())
 
-    scan_state["status"] = "Active (Live Scanner + Auto Harvester)"
+    scan_state["status"] = "Live Telegram Drops & On-Chain Audit Active"
 
     @client.on(events.NewMessage)
     async def handler(event):
+        # 1. Real Telegram tip button claimer
+        if event.message.buttons:
+            await tipper.handle_message_buttons(event, harvester)
+
         chat_id = event.chat_id
         is_monitored = (chat_id in monitored_dialog_ids) or (abs(chat_id) in monitored_dialog_ids)
 
@@ -257,11 +236,6 @@ async def start_telegram_listener():
         scan_state["last_message_time"] = now_str
 
         text = event.message.message
-        
-        # 1. Check for Telegram inline tip buttons (Tip.cc / Cwallet) and auto-claim
-        if event.message.buttons:
-            await tipper.handle_message_buttons(event, harvester)
-
         if not text:
             return
 
@@ -271,7 +245,7 @@ async def start_telegram_listener():
                 logger.info(f"✨ NEW CODE DETECTED: {code} from {chat_title}")
                 storage.add_code(code, source=chat_title)
 
-    logger.info("Telegram & Harvester engines running!")
+    logger.info("Real Telegram engine running!")
     await client.run_until_disconnected()
 
 async def main():
@@ -285,7 +259,7 @@ async def main():
     server = uvicorn.Server(config)
     
     logger.info("=" * 60)
-    logger.info("🌐 Automated Crypto Harvester is LIVE at: http://127.0.0.1:8000")
+    logger.info("🌐 100% REAL Crypto Radar is LIVE at: http://127.0.0.1:8000")
     logger.info("=" * 60)
     
     await server.serve()
