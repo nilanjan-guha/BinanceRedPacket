@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Autonomous Crypto Harvester & Radar</title>
+  <title>Autonomous Crypto Radar & Multi-Harvester</title>
   <style>
     :root {
       --bg: #0b0e11;
@@ -19,67 +19,68 @@
       --border: #2b313a;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding: 24px; }
+    body { background-color: var(--bg); color: var(--text); padding: 18px 24px; min-height: 100vh; display: flex; flex-direction: column; }
     
-    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+    /* Top Header */
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 14px; flex-wrap: wrap; gap: 12px; }
     .title { font-size: 22px; font-weight: bold; color: var(--yellow); display: flex; align-items: center; gap: 8px; }
     
-    .status-badge { background: #202630; padding: 8px 16px; border-radius: 20px; font-size: 13px; color: var(--green); display: flex; align-items: center; gap: 8px; border: 1px solid var(--border); }
+    .status-badge { background: #202630; padding: 7px 16px; border-radius: 20px; font-size: 13px; color: var(--green); display: flex; align-items: center; gap: 8px; border: 1px solid var(--border); }
     .dot { width: 10px; height: 10px; background: var(--green); border-radius: 50%; animation: pulse 1.2s infinite; }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
     
-    /* Top Live Banners Grid */
-    .banner-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+    /* Top Status Bar */
+    .banner-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 16px; }
     @media (max-width: 900px) { .banner-grid { grid-template-columns: 1fr; } }
-
-    .stat-banner { background: #161a22; border: 1px solid #2b3341; border-radius: 8px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; }
+    .stat-banner { background: #161a22; border: 1px solid #2b3341; border-radius: 8px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
     .stat-left { display: flex; align-items: center; gap: 10px; }
     .radar-icon { font-size: 20px; animation: spin 4s linear infinite; }
     @keyframes spin { 100% { transform: rotate(360deg); } }
 
     /* Wallets Carousel Pill Bar */
-    .wallet-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; margin-bottom: 20px; }
-    .wallet-title { font-size: 12px; font-weight: bold; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .wallet-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 16px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
     .wallet-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-    .wallet-tag { background: #202632; color: #c4cdd8; font-size: 12px; padding: 5px 10px; border-radius: 4px; border: 1px solid #2f3a4b; display: inline-flex; align-items: center; gap: 6px; }
+    .wallet-tag { background: #202632; color: #c4cdd8; font-size: 11px; padding: 4px 8px; border-radius: 4px; border: 1px solid #2f3a4b; display: inline-flex; align-items: center; gap: 5px; }
     .wallet-tag strong { color: var(--yellow); }
     .wallet-tag code { color: #64b5f6; font-family: monospace; font-size: 11px; }
 
-    /* Channel tags */
-    .channels-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; margin-bottom: 20px; }
-    .channel-tags { display: flex; flex-wrap: wrap; gap: 6px; max-height: 80px; overflow-y: auto; }
-    .channel-tag { background: #242b35; color: #eaecef; font-size: 11px; padding: 4px 8px; border-radius: 4px; border: 1px solid #384252; }
+    /* Navigation Tabs */
+    .tabs-nav { display: flex; gap: 10px; margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .tab-btn { background: #1b2028; border: 1px solid var(--border); color: var(--text-muted); padding: 10px 22px; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px; }
+    .tab-btn:hover { color: #fff; background: #222934; }
+    .tab-btn.active { background: #262c35; border-color: var(--yellow); color: var(--yellow); box-shadow: 0 0 10px rgba(240, 185, 11, 0.15); }
+    .tab-btn .badge-count { background: var(--yellow); color: #000; font-size: 11px; padding: 2px 7px; border-radius: 10px; font-weight: 800; }
 
-    /* Sections Grid */
-    .main-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 20px; }
-    @media (max-width: 950px) { .main-grid { grid-template-columns: 1fr; } }
+    .tab-content { display: none; flex: 1; }
+    .tab-content.active { display: block; flex: 1; }
 
-    .panel { background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border); overflow: hidden; display: flex; flex-direction: column; }
-    .panel-header { background: #1c212a; padding: 14px 18px; font-size: 14px; font-weight: bold; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 5; }
-    .table-scroll { max-height: 480px; overflow-y: auto; overflow-x: hidden; }
-    .table-scroll::-webkit-scrollbar { width: 6px; }
-    .table-scroll::-webkit-scrollbar-track { background: #181a20; }
+    /* Fullscreen Panels & Scroll Tables */
+    .panel-full { background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border); overflow: hidden; display: flex; flex-direction: column; width: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.25); }
+    .panel-header { background: #1c212a; padding: 14px 20px; font-size: 15px; font-weight: bold; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 5; }
+    
+    .table-scroll { max-height: calc(100vh - 330px); min-height: 480px; overflow-y: auto; overflow-x: auto; width: 100%; }
+    .table-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
+    .table-scroll::-webkit-scrollbar-track { background: #14161c; }
     .table-scroll::-webkit-scrollbar-thumb { background: #2f3847; border-radius: 4px; }
     .table-scroll::-webkit-scrollbar-thumb:hover { background: var(--yellow); }
-    
-    table { width: 100%; border-collapse: collapse; text-align: left; }
-    th { background: #202630; padding: 12px 14px; font-size: 12px; color: var(--text-muted); text-transform: uppercase; border-bottom: 1px solid var(--border); }
-    td { padding: 12px 14px; border-bottom: 1px solid var(--border); font-size: 13px; }
+
+    table { width: 100%; border-collapse: collapse; text-align: left; white-space: nowrap; }
+    th { background: #202630; padding: 14px 16px; font-size: 12px; color: var(--text-muted); text-transform: uppercase; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 2; }
+    td { padding: 14px 16px; border-bottom: 1px solid var(--border); font-size: 13px; }
     tr:hover { background: #1e2329; }
     
-    .code-chip { font-family: monospace; font-size: 14px; font-weight: bold; color: var(--yellow); background: #2b313a; padding: 3px 8px; border-radius: 4px; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 6px; }
-    .copy-btn { cursor: pointer; font-size: 11px; background: #3b424e; border: none; color: #fff; padding: 3px 7px; border-radius: 3px; font-weight: 500; }
+    .code-chip { font-family: monospace; font-size: 15px; font-weight: bold; color: var(--yellow); background: #2b313a; padding: 4px 10px; border-radius: 4px; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 8px; }
+    .copy-btn { cursor: pointer; font-size: 11px; background: #3b424e; border: none; color: #fff; padding: 4px 8px; border-radius: 4px; font-weight: 500; }
     .copy-btn:hover { background: var(--yellow); color: #000; }
     
-    .badge { padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; display: inline-block; }
+    .badge { padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; display: inline-block; }
     .badge-PENDING { background: rgba(240, 185, 11, 0.15); color: var(--yellow); }
     .badge-CLAIMED { background: rgba(14, 203, 129, 0.15); color: var(--green); }
+    .badge-ACTIVE { background: rgba(14, 203, 129, 0.15); color: var(--green); }
     .badge-MONITORED { background: rgba(47, 128, 237, 0.15); color: #64b5f6; }
     .badge-STANDBY { background: rgba(246, 70, 93, 0.15); color: var(--red); }
-    .badge-INVALID { background: rgba(246, 70, 93, 0.15); color: var(--red); }
     
-    .actions { display: flex; gap: 6px; }
-    .btn { cursor: pointer; border: none; border-radius: 4px; padding: 5px 10px; font-size: 11px; font-weight: bold; transition: 0.2s; }
+    .btn { cursor: pointer; border: none; border-radius: 4px; padding: 6px 12px; font-size: 11px; font-weight: bold; transition: 0.2s; }
     .btn-claim { background: var(--green); color: #000; }
     .btn-claim:hover { opacity: 0.85; }
     .btn-invalid { background: var(--red); color: #fff; }
@@ -91,9 +92,10 @@
   </style>
 </head>
 <body>
+  <!-- Header -->
   <div class="header">
     <div class="title">
-      <span>⚡ Autonomous Crypto Harvester & Radar</span>
+      <span>⚡ Autonomous Crypto Radar & Multi-Harvester</span>
     </div>
     <div class="status-badge">
       <div class="dot" id="pulseDot"></div>
@@ -103,7 +105,6 @@
 
   <!-- Top 3 Live Monitors -->
   <div class="banner-grid">
-    <!-- Messages Inspected -->
     <div class="stat-banner">
       <div class="stat-left">
         <div class="radar-icon">📡</div>
@@ -115,7 +116,6 @@
       <div style="font-size: 11px; color: var(--text-muted);" id="lastTime">-</div>
     </div>
 
-    <!-- Auto-Joined Channels -->
     <div class="stat-banner">
       <div class="stat-left">
         <div style="font-size: 20px;">🚀</div>
@@ -127,12 +127,11 @@
       <div style="font-size: 11px; color: #64b5f6;" id="lastJoinedTime">-</div>
     </div>
 
-    <!-- Auto-Harvest Engine Status -->
     <div class="stat-banner">
       <div class="stat-left">
         <div style="font-size: 20px;">🚰</div>
         <div style="font-size: 13px;">
-          <div>Faucet Engine: <span id="harvestEngineStatus" style="color: var(--green); font-weight: bold;">Active</span></div>
+          <div>Continuous Harvester: <span id="harvestEngineStatus" style="color: var(--green); font-weight: bold;">Active</span></div>
           <div style="font-size: 11px; color: var(--text-muted);">Auto-claiming to your wallets</div>
         </div>
       </div>
@@ -140,85 +139,85 @@
     </div>
   </div>
 
-  <!-- Configured Wallets Box -->
+  <!-- Connected Wallets Bar -->
   <div class="wallet-box">
-    <div class="wallet-title">
-      <span>Auto-Submitting Wallet Pool (from .env)</span>
-      <span style="color: var(--green);">● Automated Deposits Connected</span>
-    </div>
+    <span style="font-size: 11px; font-weight: bold; text-transform: uppercase; color: var(--text-muted);">Configured Receiving Addresses:</span>
     <div class="wallet-tags">
-      <div class="wallet-tag">
-        <strong>Trust EVM / Base:</strong>
-        <code>0x2De3...9f8d</code>
-      </div>
-      <div class="wallet-tag">
-        <strong>Trust Solana:</strong>
-        <code>FPYv...bEZP</code>
-      </div>
-      <div class="wallet-tag">
-        <strong>Phantom Solana:</strong>
-        <code>c4Nc...AL8a</code>
-      </div>
-      <div class="wallet-tag">
-        <strong>Trust Tron:</strong>
-        <code>TF2w...33u</code>
-      </div>
-      <div class="wallet-tag">
-        <strong>Trust BTC:</strong>
-        <code>bc1q...3uz9</code>
-      </div>
+      <div class="wallet-tag"><strong>Trust EVM / Base:</strong><code>0x2De3...9f8d</code></div>
+      <div class="wallet-tag"><strong>Trust Solana:</strong><code>FPYv...bEZP</code></div>
+      <div class="wallet-tag"><strong>Phantom Solana:</strong><code>c4Nc...AL8a</code></div>
+      <div class="wallet-tag"><strong>Trust Tron:</strong><code>TF2w...33u</code></div>
+      <div class="wallet-tag"><strong>Trust BTC:</strong><code>bc1q...3uz9</code></div>
     </div>
   </div>
 
-  <!-- Main Content Grid -->
-  <div class="main-grid">
-    <!-- Left Column: Binance Red Packet Radar -->
-    <div class="panel">
+  <!-- NAVIGATION TABS -->
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('tab-radar', this)">
+      <span>🎁 Binance Red Packet Radar</span>
+      <span class="badge-count" id="tabCodeCount">0</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('tab-harvester', this)">
+      <span>🚰 Autonomous Inflow Harvester (Faucets, DePIN, Airdrops & Tips)</span>
+      <span class="badge-count" style="background: #2f80ed; color: #fff;" id="tabHarvestCount">0</span>
+    </button>
+  </div>
+
+  <!-- TAB 1: FULLSCREEN BINANCE RED PACKET RADAR -->
+  <div id="tab-radar" class="tab-content active">
+    <div class="panel-full">
       <div class="panel-header">
-        <span>🎁 Live Red Packet Drops (<span id="totalCodesCount">0</span>)</span>
-        <span style="font-size: 12px; color: var(--yellow);">Real-Time Telegram Drops</span>
+        <span>🎁 Live Unclaimed Binance Red Packet Drops (<span id="totalCodesCount">0</span>)</span>
+        <span style="font-size: 12px; color: var(--yellow);">Real-Time Telegram Drops (Only Active / Unclaimed Shown)</span>
       </div>
       <div class="table-scroll">
         <table>
           <thead>
             <tr>
-              <th>Code</th>
-              <th>Source</th>
-              <th>Found Time</th>
-              <th>Action</th>
+              <th>#</th>
+              <th>Crypto Box Code</th>
+              <th>Source Channel / Group</th>
+              <th>Detected Timestamp</th>
+              <th>Status</th>
+              <th>One-Click Action</th>
             </tr>
           </thead>
           <tbody id="codesBody">
             <tr>
-              <td colspan="4" style="text-align: center; color: var(--text-muted); padding: 30px;">
-                Scanning channels... codes appear here in real-time.
+              <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 35px;">
+                Scanning channels... incoming Red Packet codes appear here in real-time.
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
+  </div>
 
-    <!-- Right Column: Auto-Harvester / Faucet Submissions -->
-    <div class="panel">
+  <!-- TAB 2: FULLSCREEN AUTONOMOUS HARVESTER -->
+  <div id="tab-harvester" class="tab-content">
+    <div class="panel-full">
       <div class="panel-header">
-        <span>🚰 Autonomous Faucet & Airdrop Submissions</span>
-        <span style="font-size: 12px; color: #64b5f6;">Automated Inflow</span>
+        <span>🚰 Autonomous Inflow & Airdrop Submissions (Full Ledger)</span>
+        <span style="font-size: 12px; color: #64b5f6;">Automated Inflow across Solana, EVM, Tron & DePIN Nodes</span>
       </div>
       <div class="table-scroll">
         <table>
           <thead>
             <tr>
-              <th>Network / Source</th>
-              <th>Target Wallet</th>
-              <th>Status</th>
+              <th>ID</th>
+              <th>Network & Ecosystem</th>
+              <th>Engine / Source Name</th>
+              <th>Destination Wallet</th>
+              <th>Execution Status</th>
+              <th>Activity & Detail</th>
               <th>Reason / Why</th>
-              <th>Timestamp</th>
+              <th>Exact Timestamp</th>
             </tr>
           </thead>
           <tbody id="harvestBody">
             <tr>
-              <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 30px;">
+              <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 35px;">
                 Auto-claiming cycle in progress...
               </td>
             </tr>
@@ -231,6 +230,13 @@
   <div class="toast" id="toast">Copied to clipboard!</div>
 
   <script>
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+    }
+
     async function updateStatus() {
       try {
         const res = await fetch('/api/status');
@@ -264,26 +270,22 @@
       try {
         const res = await fetch('/api/harvest');
         const items = await res.json();
+        document.getElementById('tabHarvestCount').innerText = items ? items.length : 0;
         const tbody = document.getElementById('harvestBody');
         if (!items || !items.length) {
-          tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color: var(--text-muted); padding: 30px;">Auto-claiming cycle running in background...</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color: var(--text-muted); padding: 35px;">Auto-claiming cycle running in background...</td></tr>`;
           return;
         }
-        tbody.innerHTML = items.map(i => `
+        tbody.innerHTML = items.map((i, idx) => `
           <tr>
-            <td>
-              <strong>${i.network}</strong>
-              <div style="font-size: 11px; color: var(--text-muted);">${i.source}</div>
-            </td>
-            <td><code style="color: #64b5f6; font-size: 11px;">${i.wallet.slice(0, 6)}...${i.wallet.slice(-4)}</code></td>
-            <td>
-              <span class="badge badge-${i.status}">${i.status}</span>
-              <div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">${i.detail || ''}</div>
-            </td>
-            <td style="color: #e2e8f0; font-size: 11px; max-width: 200px; line-height: 1.4;">
-              ${i.reason || 'Standard automated cycle'}
-            </td>
-            <td style="color: var(--text-muted); font-size: 11px; white-space: nowrap;">${i.timestamp}</td>
+            <td style="color: var(--text-muted); font-size: 11px;">#${items.length - idx}</td>
+            <td><strong>${i.network}</strong></td>
+            <td style="color: #c4cdd8; font-size: 12px;">${i.source}</td>
+            <td><code style="color: #64b5f6; font-size: 11px;">${i.wallet.slice(0, 8)}...${i.wallet.slice(-6)}</code></td>
+            <td><span class="badge badge-${i.status}">${i.status}</span></td>
+            <td style="font-size: 12px; color: var(--yellow);">${i.detail || ''}</td>
+            <td style="color: #e2e8f0; font-size: 11px; white-space: normal; min-width: 240px; line-height: 1.4;">${i.reason || 'Standard automated cycle'}</td>
+            <td style="color: var(--text-muted); font-size: 11px;">${i.timestamp}</td>
           </tr>
         `).join('');
       } catch (e) {
@@ -298,7 +300,7 @@
         toast.innerText = '⚡ Triggered auto-claim cycle!';
         toast.style.display = 'block';
         setTimeout(() => { toast.style.display = 'none'; }, 2500);
-        setTimeout(fetchHarvest, 3000);
+        setTimeout(fetchHarvest, 1500);
       } catch (e) {
         alert("Failed to trigger: " + e);
       }
@@ -327,30 +329,31 @@
 
     function renderCodes(items) {
       const tbody = document.getElementById('codesBody');
-      
-      // Filter out CLAIMED and INVALID codes: ONLY show active unclaimed (PENDING) codes!
       const unclaimed = items.filter(item => item.status === 'PENDING' || !item.status);
       document.getElementById('totalCodesCount').innerText = unclaimed.length;
+      document.getElementById('tabCodeCount').innerText = unclaimed.length;
 
       if (!unclaimed.length) {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--text-muted); padding: 30px;">All detected codes have been claimed! Scanning channels for new drops...</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-muted); padding: 35px;">All detected codes have been claimed! Scanning channels for new drops...</td></tr>`;
         return;
       }
 
-      tbody.innerHTML = unclaimed.map(item => `
+      tbody.innerHTML = unclaimed.map((item, idx) => `
         <tr>
+          <td style="color: var(--text-muted); font-size: 11px;">#${idx + 1}</td>
           <td>
             <span class="code-chip">
               ${item.code}
               <button class="copy-btn" onclick="copyToClipboard('${item.code}')">Copy</button>
             </span>
           </td>
-          <td>${item.source || 'Telegram'}</td>
+          <td><strong>${item.source || 'Telegram'}</strong></td>
           <td style="color: var(--yellow); font-family: monospace; font-size: 12px;">${item.timestamp}</td>
+          <td><span class="badge badge-PENDING">UNCLAIMED</span></td>
           <td>
-            <div class="actions">
-              <button class="btn btn-claim" onclick="markCode('${item.code}', 'CLAIMED')">✓ Claim</button>
-              <button class="btn btn-invalid" onclick="markCode('${item.code}', 'INVALID')">✕ Invalid</button>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-claim" onclick="markCode('${item.code}', 'CLAIMED')">✓ Mark Claimed</button>
+              <button class="btn btn-invalid" onclick="markCode('${item.code}', 'INVALID')">✕ Mark Invalid</button>
             </div>
           </td>
         </tr>
@@ -367,7 +370,7 @@
       fetchCodes();
     }, 1500);
 
-    setInterval(fetchHarvest, 4000);
+    setInterval(fetchHarvest, 3000);
   </script>
 </body>
 </html>
