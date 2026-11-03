@@ -157,8 +157,12 @@
       <span>🎁 Binance Red Packet Radar</span>
       <span class="badge-count" id="tabCodeCount">0</span>
     </button>
+    <button class="tab-btn" onclick="switchTab('tab-campaigns', this)">
+      <span>🏆 Big Prize Hub ($50 – $50,000+ Binance, Bybit, OKX & CMC)</span>
+      <span class="badge-count" style="background: #0ecb81; color: #000;" id="tabCampaignCount">0</span>
+    </button>
     <button class="tab-btn" onclick="switchTab('tab-harvester', this)">
-      <span>🚰 Autonomous Inflow Harvester (Faucets, DePIN, Airdrops & Tips)</span>
+      <span>🚰 Autonomous Inflow Harvester (Real On-Chain Ledger)</span>
       <span class="badge-count" style="background: #2f80ed; color: #fff;" id="tabHarvestCount">0</span>
     </button>
   </div>
@@ -194,7 +198,39 @@
     </div>
   </div>
 
-  <!-- TAB 2: FULLSCREEN AUTONOMOUS HARVESTER -->
+  <!-- TAB 2: FULLSCREEN BIG PRIZE RADAR -->
+  <div id="tab-campaigns" class="tab-content">
+    <div class="panel-full">
+      <div class="panel-header">
+        <span>🏆 Verified High-Prize Drops & Official Live Stream Campaigns</span>
+        <span style="font-size: 12px; color: var(--green);">Aggregated from Binance, Bybit, OKX & CoinMarketCap</span>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Platform</th>
+              <th>Campaign / Event Name</th>
+              <th>Prize Pool</th>
+              <th>Drop Category</th>
+              <th>How to Participate</th>
+              <th>Direct Official Link</th>
+              <th>Found Time</th>
+            </tr>
+          </thead>
+          <tbody id="campaignsBody">
+            <tr>
+              <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 35px;">
+                Scanning official crypto exchange streams and verified reward pools...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: FULLSCREEN AUTONOMOUS HARVESTER -->
   <div id="tab-harvester" class="tab-content">
     <div class="panel-full">
       <div class="panel-header">
@@ -360,10 +396,37 @@
       `).join('');
     }
 
+    async function fetchCampaigns() {
+      try {
+        const res = await fetch('/api/campaigns');
+        const items = await res.json();
+        document.getElementById('tabCampaignCount').innerText = items ? items.length : 0;
+        const tbody = document.getElementById('campaignsBody');
+        if (!items || !items.length) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color: var(--text-muted); padding: 35px;">Scanning official exchange campaigns...</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = items.map(c => `
+          <tr>
+            <td><strong style="color: var(--yellow);">${c.platform}</strong></td>
+            <td style="font-weight: 600; color: #fff;">${c.title}</td>
+            <td style="color: var(--green); font-weight: bold;">${c.prize_pool}</td>
+            <td><span class="badge badge-CLAIMED">${c.type}</span></td>
+            <td style="color: #c4cdd8; font-size: 12px;">${c.action}</td>
+            <td><a class="btn-claim" style="text-decoration: none; padding: 6px 12px; display: inline-block;" href="${c.link}" target="_blank">Open Event ↗</a></td>
+            <td style="color: var(--text-muted); font-size: 11px;">${c.timestamp}</td>
+          </tr>
+        `).join('');
+      } catch (e) {
+        console.error("Campaigns error:", e);
+      }
+    }
+
     // Auto-refresh loops
     updateStatus();
     fetchCodes();
     fetchHarvest();
+    fetchCampaigns();
 
     setInterval(() => {
       updateStatus();
@@ -371,6 +434,7 @@
     }, 1500);
 
     setInterval(fetchHarvest, 3000);
+    setInterval(fetchCampaigns, 10000);
   </script>
 </body>
 </html>

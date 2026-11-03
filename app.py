@@ -18,6 +18,7 @@ from storage import CodeManager
 from auto_harvester import AutoHarvester
 from telegram_tipper import TelegramTipClaimer
 from web_scraper import WebRedPacketScraper
+from campaign_radar import BigPrizeRadar
 
 logging.basicConfig(
     level=logging.INFO,
@@ -35,6 +36,7 @@ storage = CodeManager("codes_history.json")
 harvester = AutoHarvester("harvest_history.json")
 tipper = TelegramTipClaimer("harvest_history.json")
 web_scraper = WebRedPacketScraper(storage)
+campaign_radar = BigPrizeRadar()
 app = FastAPI(title="Verified Crypto Radar & Ledger")
 
 TARGET_KEYWORDS = [
@@ -97,6 +99,10 @@ async def get_codes():
 @app.get("/api/harvest")
 async def get_harvest_records():
     return harvester.history
+
+@app.get("/api/campaigns")
+async def get_high_value_campaigns():
+    return campaign_radar.scan_all_high_value_campaigns()
 
 @app.post("/api/trigger-harvest")
 async def trigger_harvest_now():
