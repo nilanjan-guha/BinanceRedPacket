@@ -47,3 +47,4 @@ KriptoK redefines the boundary between traditional Wall Street capital markets a
 
 - **Platform:** [KriptoK Official Platform](https://superteam.fun/earn/listing/kriptok-creator-challenge-01)
 - **Twitter/X:** Follow `@KriptoK` and `@KriptoKLeague`
+
