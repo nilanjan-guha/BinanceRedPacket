@@ -17,6 +17,7 @@ from extractor import extract_codes
 from storage import CodeManager
 from auto_harvester import AutoHarvester
 from telegram_tipper import TelegramTipClaimer
+from web_scraper import WebRedPacketScraper
 
 logging.basicConfig(
     level=logging.INFO,
@@ -33,6 +34,7 @@ PHONE = os.getenv("TELEGRAM_PHONE")
 storage = CodeManager("codes_history.json")
 harvester = AutoHarvester("harvest_history.json")
 tipper = TelegramTipClaimer("harvest_history.json")
+web_scraper = WebRedPacketScraper(storage)
 app = FastAPI(title="Verified Crypto Radar & Ledger")
 
 TARGET_KEYWORDS = [
@@ -176,12 +178,21 @@ async def dynamic_channel_discovery_loop(client: TelegramClient):
         await asyncio.sleep(600)
 
 async def recurring_auto_harvest_loop():
-    """Real on-chain balance audit runs every 30 seconds."""
+    """Real on-chain balance audit & web code scraping runs continuously."""
+    cycle = 0
     while True:
         try:
-            scan_state["harvest_status"] = "Verifying On-Chain Ledgers..."
+            cycle += 1
+            scan_state["harvest_status"] = "Verifying On-Chain Ledgers & Scraping Web Codes..."
+            
+            # 1. On-Chain real balance verification
             await harvester.run_faucet_auto_cycle()
-            scan_state["harvest_status"] = "On-Chain Audit Active"
+
+            # 2. Web scraper: crawls external web sources for Binance codes every 2 minutes
+            if cycle % 2 == 0:
+                web_scraper.harvest_web_codes()
+
+            scan_state["harvest_status"] = "On-Chain Audit & Web Radar Active"
         except Exception as e:
             logger.error(f"Audit loop error: {e}")
             scan_state["harvest_status"] = f"Audit Error: {e}"
