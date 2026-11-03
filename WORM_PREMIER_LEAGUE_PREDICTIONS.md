@@ -53,3 +53,4 @@ worm is leading the next generation of onchain sports prediction by giving footb
 
 - **Trade Premier League on Solana:** [worm.wtf](https://worm.wtf)
 - **Official Bounty:** [Superteam Earn Premier League Challenge](https://superteam.fun/earn/listing/create-content-on-premier-league-predictions-with-worm)
+
