@@ -104,10 +104,15 @@
     .hub-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px; }
     .hub-steps { background: #13151b; border-radius: 6px; padding: 12px; font-size: 12px; color: #c0c6d0; line-height: 1.6; margin-bottom: 14px; border: 1px solid #232832; }
     .hub-steps strong { color: var(--yellow); }
-    .hub-action { display: flex; justify-content: space-between; align-items: center; }
+    .hub-action { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
     .hub-reward { font-size: 13px; font-weight: 700; color: var(--green); }
     .hub-link { background: var(--yellow); color: #000; text-decoration: none; font-weight: bold; font-size: 13px; padding: 8px 16px; border-radius: 6px; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px; }
     .hub-link:hover { opacity: 0.85; }
+
+    /* Wallet Bar */
+    .wallet-bar { background: #141b24; border: 1px solid #1f2f45; border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .wallet-info { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+    .wallet-pill { font-family: monospace; background: #1d2b3a; color: #64b5f6; padding: 4px 10px; border-radius: 4px; font-size: 12px; }
 
     .toast { position: fixed; bottom: 20px; right: 20px; background: var(--yellow); color: #000; padding: 10px 18px; border-radius: 6px; font-weight: bold; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.4); z-index: 1000; }
   </style>
@@ -123,6 +128,19 @@
     </div>
   </div>
 
+  <!-- Wallet Connection Status -->
+  <div class="wallet-bar">
+    <div class="wallet-info">
+      <span style="font-size: 16px;">👛</span>
+      <span>Connected Public Wallets:</span>
+      <span class="wallet-pill" id="ethWalletPill">ETH: Loading...</span>
+      <span class="wallet-pill" id="solWalletPill">SOL: Loading...</span>
+    </div>
+    <div style="font-size: 12px; color: var(--green);" id="alchemyStatus">
+      ● Alchemy RPC Connected
+    </div>
+  </div>
+
   <!-- Navigation Tabs -->
   <div class="tabs-nav">
     <button class="tab-btn active" onclick="switchTab('tab-radar', this)">
@@ -130,10 +148,13 @@
       <span class="badge-count" id="tabCodeCount">0</span>
     </button>
     <button class="tab-btn" onclick="switchTab('tab-airdrops', this)">
-      <span>🪂 Testnet Airdrops & Guides ($50 – $1,000+)</span>
+      <span>🪂 Zero-Cost Testnet Airdrops ($50 – $1,000+)</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('tab-faucets', this)">
+      <span>🚰 Free Testnet Faucets & Alchemy ($0 Gas)</span>
     </button>
     <button class="tab-btn" onclick="switchTab('tab-tasks', this)">
-      <span>💼 Web3 Tasks, Faucets & Bounties ($10 – $100+/mo)</span>
+      <span>💼 Web3 Tasks & Bounties ($10 – $100+/mo)</span>
     </button>
   </div>
 
@@ -219,112 +240,71 @@
   <!-- TAB 2: TESTNET AIRDROPS -->
   <div id="tab-airdrops" class="tab-content">
     <div style="background: #181d26; border: 1px solid #2f3847; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
-      <h3 style="color: var(--yellow); margin-bottom: 6px;">How Zero-Cost Testnet Airdrops Work:</h3>
+      <h3 style="color: var(--yellow); margin-bottom: 6px;">Live Curated Zero-Cost Testnets (All ₹0 Investment):</h3>
       <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
-        You spend <strong>₹0 real money</strong>. You get free "Testnet tokens" from a faucet, interact with new blockchain apps, and when the project launches its main token, you receive free coins directly into your wallet that can be transferred to Binance and sold for INR.
+        Filtered and verified testnets. Claim free testnet tokens from the faucet, execute simple transactions, and qualify for upcoming mainnet token airdrops directly into your Trust Wallet.
       </p>
     </div>
 
-    <div class="hub-grid">
-      <!-- Card 1: DefiLlama -->
-      <div class="hub-card">
-        <div class="hub-top">
-          <span class="hub-tag tag-airdrop">Aggregator & Tracker</span>
-          <div class="hub-title">DefiLlama Airdrop Tracker</div>
-          <div class="hub-desc">The most respected analytics directory tracking unreleased tokens and active testnet airdrop opportunities without hype.</div>
-          <div class="hub-steps">
-            <strong>How to start:</strong><br>
-            1. Open DefiLlama Airdrops.<br>
-            2. Filter by "Tokenless Protocols".<br>
-            3. Follow step-by-step guides for free testnets.
-          </div>
-        </div>
-        <div class="hub-action">
-          <span class="hub-reward">Potential: $100 - $1,500+</span>
-          <a class="hub-link" href="https://defillama.com/airdrops" target="_blank">Open DefiLlama ↗</a>
-        </div>
-      </div>
-
-      <!-- Card 2: Airdrops.io -->
-      <div class="hub-card">
-        <div class="hub-top">
-          <span class="hub-tag tag-airdrop">Beginner Friendly</span>
-          <div class="hub-title">Airdrops.io Portal</div>
-          <div class="hub-desc">Hand-curated repository of active, potential, and zero-investment retroactive testnet airdrops with complete checklists.</div>
-          <div class="hub-steps">
-            <strong>How to start:</strong><br>
-            1. Click the "Potential Airdrops" or "Testnet" tab.<br>
-            2. Follow the numbered tasks (testnet faucets, swaps).<br>
-            3. Bookmark completed tasks.
-          </div>
-        </div>
-        <div class="hub-action">
-          <span class="hub-reward">Cost: ₹0 (Testnet only)</span>
-          <a class="hub-link" href="https://airdrops.io/speculative/" target="_blank">Open Airdrops.io ↗</a>
-        </div>
-      </div>
-
-      <!-- Card 3: Layer3 -->
-      <div class="hub-card">
-        <div class="hub-top">
-          <span class="hub-tag tag-airdrop">Interactive Quests</span>
-          <div class="hub-title">Layer3.xyz Quests</div>
-          <div class="hub-desc">Interactive web3 quest platform. Guides you click-by-click through new crypto ecosystems and rewards you with XP, CUBEs, and tokens.</div>
-          <div class="hub-steps">
-            <strong>How to start:</strong><br>
-            1. Connect MetaMask or Coinbase Wallet.<br>
-            2. Filter quests by "Free / Testnet".<br>
-            3. Earn on-chain credentials for upcoming airdrops.
-          </div>
-        </div>
-        <div class="hub-action">
-          <span class="hub-reward">Reward: Tokens + Airdrops</span>
-          <a class="hub-link" href="https://layer3.xyz/" target="_blank">Start Quests ↗</a>
-        </div>
-      </div>
-
-      <!-- Card 4: Galxe -->
-      <div class="hub-card">
-        <div class="hub-top">
-          <span class="hub-tag tag-airdrop">Official Campaigns</span>
-          <div class="hub-title">Galxe (Galaxy) ID</div>
-          <div class="hub-desc">The #1 platform used by Layer-1 and Layer-2 blockchains (e.g. Linea, Berachain, Arbitrum) to track testnet participants.</div>
-          <div class="hub-steps">
-            <strong>How to start:</strong><br>
-            1. Register with your wallet & Twitter/Discord.<br>
-            2. Complete testnet tasks & claim free OAT badges.<br>
-            3. Qualify for official token distribution.
-          </div>
-        </div>
-        <div class="hub-action">
-          <span class="hub-reward">Potential: $50 - $800+</span>
-          <a class="hub-link" href="https://app.galxe.com/quest" target="_blank">Open Galxe ↗</a>
-        </div>
-      </div>
+    <div class="hub-grid" id="airdropsGrid">
+      <div style="color: var(--text-muted); padding: 20px;">Loading verified testnet opportunities...</div>
     </div>
   </div>
 
-  <!-- TAB 3: TASKS, FAUCETS & BOUNTIES -->
+  <!-- TAB 3: FREE TESTNET FAUCETS & ALCHEMY -->
+  <div id="tab-faucets" class="tab-content">
+    <div style="background: #181d26; border: 1px solid #2f3847; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+      <h3 style="color: var(--blue); margin-bottom: 6px;">Direct Testnet Gas Faucets:</h3>
+      <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+        Pre-configured for your public Trust Wallet address (<strong>0x2De3...9f8d</strong>) and Solana (<strong>FPYv...bEZP</strong>). Use your Alchemy API to claim daily test gas without spending real money.
+      </p>
+    </div>
+
+    <div class="hub-grid" id="faucetsGrid">
+      <div style="color: var(--text-muted); padding: 20px;">Loading faucet endpoints...</div>
+    </div>
+  </div>
+
+  <!-- TAB 4: TASKS & BOUNTIES -->
   <div id="tab-tasks" class="tab-content">
     <div style="background: #181d26; border: 1px solid #2f3847; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
-      <h3 style="color: var(--green); margin-bottom: 6px;">Micro-Tasks, Bug Bounties & Community Rewards:</h3>
+      <h3 style="color: var(--green); margin-bottom: 6px;">Verified Micro-Tasks, Bug Bounties & Quizzes:</h3>
       <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
-        Earn real cryptocurrency by contributing skills, reporting bugs, completing developer bounties, or participating in educational quizzes.
+        Direct payout platforms paying in USDT, USDC, or direct Binance account credit for simple tasks, quizzes, and bug reporting.
       </p>
     </div>
 
     <div class="hub-grid">
-      <!-- Card 1: Immunefi -->
+      <!-- Binance Learn & Earn -->
+      <div class="hub-card">
+        <div class="hub-top">
+          <span class="hub-tag tag-task">Direct Binance Credit</span>
+          <div class="hub-title">Binance Learn & Earn</div>
+          <div class="hub-desc">Official Binance program. Watch short 2-minute videos, pass a 4-question quiz, and get real crypto deposited straight to your Binance wallet.</div>
+          <div class="hub-steps">
+            <strong>How it works:</strong><br>
+            1. Open Binance Learn & Earn.<br>
+            2. Answer simple quiz questions.<br>
+            3. Free tokens credited in 2 hours.
+          </div>
+        </div>
+        <div class="hub-action">
+          <span class="hub-reward">Instant: $3 – $20 per quiz</span>
+          <a class="hub-link" href="https://academy.binance.com/en/learn-and-earn" target="_blank">Open Learn & Earn ↗</a>
+        </div>
+      </div>
+
+      <!-- Immunefi -->
       <div class="hub-card">
         <div class="hub-top">
           <span class="hub-tag tag-bounty">Bug Bounty / Code</span>
           <div class="hub-title">Immunefi Bug Bounties</div>
-          <div class="hub-desc">The leading Web3 security bounty platform. Pays developers and white-hats to find smart contract vulnerabilities or website logic errors.</div>
+          <div class="hub-desc">The leading Web3 security bounty platform. Pays developers to find website logic glitches or smart contract flaws.</div>
           <div class="hub-steps">
-            <strong>How to start:</strong><br>
-            1. Register for an Immunefi researcher account.<br>
-            2. Choose active bounty programs (Web/API or Smart Contract).<br>
-            3. Submit verified findings for instant payout in USDT/USDC.
+            <strong>How it works:</strong><br>
+            1. Create free Immunefi profile.<br>
+            2. Check website & frontend bounty listings.<br>
+            3. Report bugs for verified payout in USDC.
           </div>
         </div>
         <div class="hub-action">
@@ -333,60 +313,22 @@
         </div>
       </div>
 
-      <!-- Card 2: Gitcoin -->
+      <!-- Layer3 Quests -->
       <div class="hub-card">
         <div class="hub-top">
-          <span class="hub-tag tag-task">Community & Grants</span>
-          <div class="hub-title">Gitcoin Passport & Bounties</div>
-          <div class="hub-desc">Global platform funding open-source development, community contributions, and testnet verification tasks in Web3.</div>
+          <span class="hub-tag tag-airdrop">Interactive Quests</span>
+          <div class="hub-title">Layer3.xyz Quests</div>
+          <div class="hub-desc">Interactive web3 quest platform. Guides you through free testnet tasks step-by-step and rewards you with tokens and credentials.</div>
           <div class="hub-steps">
-            <strong>How to start:</strong><br>
-            1. Create Gitcoin Passport to establish human identity.<br>
-            2. Explore bounties, community rounds, and hackathons.<br>
-            3. Get paid directly to your crypto wallet.
+            <strong>How it works:</strong><br>
+            1. Connect Trust Wallet.<br>
+            2. Choose zero-cost testnet quests.<br>
+            3. Earn verified airdrop eligibility.
           </div>
         </div>
         <div class="hub-action">
-          <span class="hub-reward">Earnings: $25 – $250 / task</span>
-          <a class="hub-link" href="https://www.gitcoin.co/" target="_blank">Open Gitcoin ↗</a>
-        </div>
-      </div>
-
-      <!-- Card 3: Binance Learn & Earn -->
-      <div class="hub-card">
-        <div class="hub-top">
-          <span class="hub-tag tag-task">Instant Binance Crediting</span>
-          <div class="hub-title">Binance Learn & Earn</div>
-          <div class="hub-desc">Official Binance program. Watch short 2-minute videos, pass a 4-question quiz, and get real crypto deposited straight to your Binance wallet.</div>
-          <div class="hub-steps">
-            <strong>How to start:</strong><br>
-            1. Open the Binance app or web portal.<br>
-            2. Go to More > Learn & Earn.<br>
-            3. Answer simple quiz questions; rewards appear in 2 hours.
-          </div>
-        </div>
-        <div class="hub-action">
-          <span class="hub-reward">Instant: $3 – $20 per quiz</span>
-          <a class="hub-link" href="https://academy.binance.com/en/learn-and-earn" target="_blank">Learn & Earn ↗</a>
-        </div>
-      </div>
-
-      <!-- Card 4: FaucetLink -->
-      <div class="hub-card">
-        <div class="hub-top">
-          <span class="hub-tag tag-airdrop">Free Testnet Gas</span>
-          <div class="hub-title">Multi-Chain Faucets (FaucetLink)</div>
-          <div class="hub-desc">Curated aggregator providing free testnet Sepolia, Holesky, and L2 test tokens required to test airdrops without spending any real money.</div>
-          <div class="hub-steps">
-            <strong>How to start:</strong><br>
-            1. Paste your public MetaMask address.<br>
-            2. Click "Claim testnet ETH".<br>
-            3. Use the free testnet funds to interact with new protocols.
-          </div>
-        </div>
-        <div class="hub-action">
-          <span class="hub-reward">Cost: Always Free ($0)</span>
-          <a class="hub-link" href="https://faucetlink.to/" target="_blank">Get Test Tokens ↗</a>
+          <span class="hub-reward">Reward: Tokens + Airdrops</span>
+          <a class="hub-link" href="https://layer3.xyz/" target="_blank">Start Quests ↗</a>
         </div>
       </div>
     </div>
@@ -395,11 +337,9 @@
   <div class="toast" id="toast">Copied to clipboard!</div>
 
   <script>
-    // Tab switching logic
     function switchTab(tabId, btn) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-      
       document.getElementById(tabId).classList.add('active');
       btn.classList.add('active');
     }
@@ -435,9 +375,71 @@
       try {
         const res = await fetch('/api/codes');
         const data = await res.json();
-        render(data);
+        renderCodes(data);
       } catch (e) {
         console.error("Fetch error:", e);
+      }
+    }
+
+    async function loadAirdrops() {
+      try {
+        const res = await fetch('/api/airdrops');
+        const items = await res.json();
+        const container = document.getElementById('airdropsGrid');
+        container.innerHTML = items.map(a => `
+          <div class="hub-card">
+            <div class="hub-top">
+              <span class="hub-tag tag-airdrop">${a.chain}</span>
+              <div class="hub-title">${a.name}</div>
+              <div class="hub-desc">${a.action_summary}</div>
+              <div class="hub-steps">
+                <strong>Cost:</strong> <span style="color: var(--green);">${a.cost}</span><br>
+                <strong>Reward Potential:</strong> <span style="color: var(--yellow);">${a.reward_potential}</span>
+              </div>
+            </div>
+            <div class="hub-action">
+              <a class="hub-link" style="background: #232832; color: #fff;" href="${a.faucet_url}" target="_blank">1. Faucet 🚰</a>
+              <a class="hub-link" href="${a.guide_url}" target="_blank">2. Start Guide ↗</a>
+            </div>
+          </div>
+        `).join('');
+      } catch (e) {
+        console.error("Airdrops error:", e);
+      }
+    }
+
+    async function loadFaucets() {
+      try {
+        const res = await fetch('/api/faucets');
+        const data = await res.json();
+        
+        if (data.wallets.eth) {
+          document.getElementById('ethWalletPill').innerText = 'ETH: ' + data.wallets.eth.slice(0, 6) + '...' + data.wallets.eth.slice(-4);
+        }
+        if (data.wallets.sol) {
+          document.getElementById('solWalletPill').innerText = 'SOL: ' + data.wallets.sol.slice(0, 5) + '...' + data.wallets.sol.slice(-4);
+        }
+
+        const container = document.getElementById('faucetsGrid');
+        container.innerHTML = data.faucets.map(f => `
+          <div class="hub-card">
+            <div class="hub-top">
+              <span class="hub-tag tag-task">${f.network}</span>
+              <div class="hub-title">${f.token}</div>
+              <div class="hub-desc">${f.direct_action}</div>
+              <div class="hub-steps">
+                <strong>Preloaded Wallet:</strong><br>
+                <code style="color: #64b5f6; font-size: 11px;">${f.wallet}</code>
+              </div>
+            </div>
+            <div class="hub-action">
+              <button class="copy-btn" style="padding: 8px 12px;" onclick="copyToClipboard('${f.wallet}')">Copy Address</button>
+              <a class="hub-link" href="${f.url}" target="_blank">Open Faucet ↗</a>
+            </div>
+          </div>
+        `).join('');
+      } catch (e) {
+        console.error("Faucets error:", e);
       }
     }
 
@@ -457,12 +459,12 @@
     function copyToClipboard(text) {
       navigator.clipboard.writeText(text);
       const toast = document.getElementById('toast');
-      toast.innerText = 'Copied code ' + text + ' !';
+      toast.innerText = 'Copied ' + text + ' !';
       toast.style.display = 'block';
       setTimeout(() => { toast.style.display = 'none'; }, 2000);
     }
 
-    function render(items) {
+    function renderCodes(items) {
       const tbody = document.getElementById('codesBody');
       let pending = 0, claimed = 0, invalid = 0;
 
@@ -504,9 +506,13 @@
       `).join('');
     }
 
-    // Continuous polling in the background regardless of which tab you are on!
+    // Load initial data
     updateStatus();
     fetchCodes();
+    loadAirdrops();
+    loadFaucets();
+
+    // Polling in background
     setInterval(() => {
       updateStatus();
       fetchCodes();

@@ -15,6 +15,8 @@ import uvicorn
 
 from extractor import extract_codes
 from storage import CodeManager
+from airdrop_fetcher import AirdropManager
+from alchemy_manager import AlchemyManager
 
 logging.basicConfig(
     level=logging.INFO,
@@ -28,7 +30,13 @@ API_ID = os.getenv("TELEGRAM_API_ID")
 API_HASH = os.getenv("TELEGRAM_API_HASH")
 PHONE = os.getenv("TELEGRAM_PHONE")
 
+USER_ETH = os.getenv("USER_ETH_WALLET", "")
+USER_SOL = os.getenv("USER_SOLANA_WALLET", "")
+ALCHEMY_KEY = os.getenv("ALCHEMY_API_KEY", "")
+
 storage = CodeManager("codes_history.json")
+airdrop_mgr = AirdropManager()
+alchemy_mgr = AlchemyManager(api_key=ALCHEMY_KEY, eth_wallet=USER_ETH, sol_wallet=USER_SOL)
 app = FastAPI(title="Binance Red Packet Radar")
 
 # Channel filter keywords
@@ -84,6 +92,19 @@ async def get_dashboard():
 @app.get("/api/status")
 async def get_system_status():
     return scan_state
+
+
+@app.get("/api/airdrops")
+async def get_active_airdrops():
+    return airdrop_mgr.get_active_testnets()
+
+@app.get("/api/faucets")
+async def get_faucets():
+    return {
+        "balance": alchemy_mgr.check_sepolia_balance(),
+        "faucets": alchemy_mgr.get_faucets_for_user(),
+        "wallets": {"eth": USER_ETH, "sol": USER_SOL}
+    }
 
 @app.get("/api/codes")
 async def get_codes():
