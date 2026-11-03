@@ -42,3 +42,4 @@ MEV searchers must pay priority tips to Jito validators to land profitable arbit
 1. **Sustainable Revenue Engine:** Over 80% of top-performing Solana validators run the Jito-Solana client. Jito’s economic moat is not based on marketing, but on block-space latency and MEV capture.
 2. **Defensive Valuation Metric:** When evaluating Price-to-Earnings (P/E) across Solana protocols, Jito demonstrates one of the highest cash-flow-to-market-cap ratios in Web3, providing strong downside protection during broader market consolidations.
 3. **Actionable Alpha Conclusion:** Accumulation of JTO is favorable during consolidation periods preceding major Solana network upgrades, where heightened on-chain activity directly translates to surging validator tips and treasury expansion.
+

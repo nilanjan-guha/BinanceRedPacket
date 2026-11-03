@@ -1,12 +1,1002 @@
 [
   {
-    "id": 1,
-    "timestamp": "2026-11-03 18:36:43",
+    "id": 101,
+    "timestamp": "2026-11-03 20:15:59",
+    "source": "Solana RPC Validator",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Real On-Chain Balance: 7.9999 SOL",
+    "reason": "Current confirmed balance in Phantom wallet (Verified on-chain)"
+  },
+  {
+    "id": 101,
+    "timestamp": "2026-11-03 20:00:51",
+    "source": "Solana RPC Validator",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Real On-Chain Balance: 7.9999 SOL",
+    "reason": "Current confirmed balance in Phantom wallet (Verified on-chain)"
+  },
+  {
+    "id": 101,
+    "timestamp": "2026-11-03 19:55:27",
+    "source": "Solana RPC Validator",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Real On-Chain Balance: 10.0 SOL",
+    "reason": "Current confirmed balance in Phantom wallet (Verified on-chain)"
+  },
+  {
+    "id": 101,
+    "timestamp": "2026-11-03 19:35:28",
+    "source": "Solana RPC Validator",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Real On-Chain Balance: 10.0 SOL",
+    "reason": "Current confirmed balance in Phantom wallet (Verified on-chain)"
+  },
+  {
+    "id": 101,
+    "timestamp": "2026-11-03 18:59:23",
+    "source": "Solana RPC Validator",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Real On-Chain Balance: 10.0 SOL",
+    "reason": "Current confirmed balance in Phantom wallet (Verified on-chain)"
+  },
+  {
+    "id": 151,
+    "timestamp": "2026-11-03 18:45:08",
+    "source": "Solana RPC Validator",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Real On-Chain Balance: 10.0 SOL",
+    "reason": "Current confirmed balance in Phantom wallet (Verified on-chain)"
+  },
+  {
+    "id": 151,
+    "timestamp": "2026-11-03 18:40:17",
     "source": "Solana RPC Validator",
     "network": "Solana Devnet",
     "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
     "status": "CLAIMED",
     "detail": "Real On-Chain Balance: 10.0 SOL",
     "reason": "Verified by Solana RPC query; funds exist in Phantom wallet"
+  },
+  {
+    "id": 151,
+    "timestamp": "2026-11-03 18:39:46",
+    "source": "Solana RPC Validator",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Real On-Chain Balance: 10.0 SOL",
+    "reason": "Verified by Solana RPC query; funds exist in Phantom wallet"
+  },
+  {
+    "id": 151,
+    "timestamp": "2026-11-03 18:39:15",
+    "source": "Solana RPC Validator",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Real On-Chain Balance: 10.0 SOL",
+    "reason": "Verified by Solana RPC query; funds exist in Phantom wallet"
+  },
+  {
+    "id": 151,
+    "timestamp": "2026-11-03 18:38:44",
+    "source": "Solana RPC Validator",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Real On-Chain Balance: 10.0 SOL",
+    "reason": "Verified by Solana RPC query; funds exist in Phantom wallet"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:38:13",
+    "source": "Solana RPC Validator",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Real On-Chain Balance: 10.0 SOL",
+    "reason": "Verified by Solana RPC query; funds exist in Phantom wallet"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:37:35",
+    "source": "Tron / BSC Faucet Scanner",
+    "network": "Tron Network",
+    "wallet": "TF2w8pfN2QfXP31ZG2Ju5K4fXVEtA8X33u",
+    "status": "ACTIVE",
+    "detail": "Address queued in Telegram tipper & faucet pool",
+    "reason": "Actively waiting for Telegram tipping bot drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:37:35",
+    "source": "Automated Base / EVM Dispatcher",
+    "network": "Base / Ethereum",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "MONITORED",
+    "detail": "Wallet auto-registered for gas distributions & airdrop drops",
+    "reason": "Listening for official mainnet airdrop claims"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:37:35",
+    "source": "Live Scraper (Plume Vaults)",
+    "network": "Multi-Chain (RWA)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: Plume Vaults",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:37:35",
+    "source": "Live Scraper (Hive Protocol)",
+    "network": "BSquared (Chain)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: Hive Protocol",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:37:32",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "FPYvcBK6j5z6diQhT6KaFEX5AVP7kbEiEQjiM3bvbEZP",
+    "status": "MONITORED",
+    "detail": "Queued for next faucet cycle (balance: 0 SOL)",
+    "reason": "Address monitored for upcoming devnet faucet drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:37:31",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Verified On-Chain: 10.0 SOL in Phantom",
+    "reason": "Tokens successfully received and verified on-chain via Solana RPC"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:36:31",
+    "source": "DePIN Network (Grass Node)",
+    "network": "Solana Mainnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "ACTIVE",
+    "detail": "Shared Uptime Heartbeat: +15 Grass Points (Total: 450)",
+    "reason": "Passive bandwidth sharing background node linked to Phantom Solana wallet"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:36:31",
+    "source": "Tron / BSC Faucet Scanner",
+    "network": "Tron Network",
+    "wallet": "TF2w8pfN2QfXP31ZG2Ju5K4fXVEtA8X33u",
+    "status": "ACTIVE",
+    "detail": "Address queued in Telegram tipper & faucet pool",
+    "reason": "Actively waiting for Telegram tipping bot drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:36:31",
+    "source": "Automated Base / EVM Dispatcher",
+    "network": "Base / Ethereum",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "MONITORED",
+    "detail": "Wallet auto-registered for gas distributions & airdrop drops",
+    "reason": "Listening for official mainnet airdrop claims"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:36:31",
+    "source": "Live Scraper (BitFi Basis)",
+    "network": "Multi-Chain (Basis Trading)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: BitFi Basis",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:36:31",
+    "source": "Live Scraper (OpenTrade)",
+    "network": "Multi-Chain (RWA)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: OpenTrade",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:36:28",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "FPYvcBK6j5z6diQhT6KaFEX5AVP7kbEiEQjiM3bvbEZP",
+    "status": "MONITORED",
+    "detail": "Queued for next faucet cycle (balance: 0 SOL)",
+    "reason": "Address monitored for upcoming devnet faucet drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:36:28",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Verified On-Chain: 10.0 SOL in Phantom",
+    "reason": "Tokens successfully received and verified on-chain via Solana RPC"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:36:12",
+    "source": "Telegram Tipper (\ud83d\udd25 Land of Coins | Binance Crypto Box)",
+    "network": "USDT / BSC / Tron",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "CLAIMED",
+    "detail": "Auto-clicked inline tip button: '\ud83d\udd25 Claim LUNC'",
+    "reason": "Instant real-crypto tipping drop claimed via Telegram callback"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:36:09",
+    "source": "Telegram Tipper (\ud83d\udd25 Land of Coins | Binance Crypto Box)",
+    "network": "USDT / BSC / Tron",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "CLAIMED",
+    "detail": "Auto-clicked inline tip button: '\ud83d\udd25 Claim REZ'",
+    "reason": "Instant real-crypto tipping drop claimed via Telegram callback"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:35:27",
+    "source": "Tron / BSC Faucet Scanner",
+    "network": "Tron Network",
+    "wallet": "TF2w8pfN2QfXP31ZG2Ju5K4fXVEtA8X33u",
+    "status": "ACTIVE",
+    "detail": "Address queued in Telegram tipper & faucet pool",
+    "reason": "Actively waiting for Telegram tipping bot drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:35:27",
+    "source": "Automated Base / EVM Dispatcher",
+    "network": "Base / Ethereum",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "MONITORED",
+    "detail": "Wallet auto-registered for gas distributions & airdrop drops",
+    "reason": "Listening for official mainnet airdrop claims"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:35:27",
+    "source": "Live Scraper (b14g)",
+    "network": "Multi-Chain (Restaking)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: b14g",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:35:27",
+    "source": "Live Scraper (Lightning Network)",
+    "network": "Bitcoin (Payments)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: Lightning Network",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:35:25",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "FPYvcBK6j5z6diQhT6KaFEX5AVP7kbEiEQjiM3bvbEZP",
+    "status": "MONITORED",
+    "detail": "Queued for next faucet cycle (balance: 0 SOL)",
+    "reason": "Address monitored for upcoming devnet faucet drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:35:25",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Verified On-Chain: 10.0 SOL in Phantom",
+    "reason": "Tokens successfully received and verified on-chain via Solana RPC"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:34:24",
+    "source": "DePIN Network (Grass Node)",
+    "network": "Solana Mainnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "ACTIVE",
+    "detail": "Shared Uptime Heartbeat: +15 Grass Points (Total: 435)",
+    "reason": "Passive bandwidth sharing background node linked to Phantom Solana wallet"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:34:24",
+    "source": "Tron / BSC Faucet Scanner",
+    "network": "Tron Network",
+    "wallet": "TF2w8pfN2QfXP31ZG2Ju5K4fXVEtA8X33u",
+    "status": "ACTIVE",
+    "detail": "Address queued in Telegram tipper & faucet pool",
+    "reason": "Actively waiting for Telegram tipping bot drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:34:24",
+    "source": "Automated Base / EVM Dispatcher",
+    "network": "Base / Ethereum",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "MONITORED",
+    "detail": "Wallet auto-registered for gas distributions & airdrop drops",
+    "reason": "Listening for official mainnet airdrop claims"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:34:24",
+    "source": "Live Scraper (Mellow Core)",
+    "network": "Multi-Chain (Onchain Capital Allocator)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: Mellow Core",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:34:24",
+    "source": "Live Scraper (Hyperithm)",
+    "network": "Multi-Chain (Risk Curators)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: Hyperithm",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:34:21",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "FPYvcBK6j5z6diQhT6KaFEX5AVP7kbEiEQjiM3bvbEZP",
+    "status": "MONITORED",
+    "detail": "Queued for next faucet cycle (balance: 0 SOL)",
+    "reason": "Address monitored for upcoming devnet faucet drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:34:21",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Verified On-Chain: 10.0 SOL in Phantom",
+    "reason": "Tokens successfully received and verified on-chain via Solana RPC"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:33:21",
+    "source": "Daily Airdrop Interaction Ping",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Interaction Recorded at Slot #518224468 (Streak: 3 Days)",
+    "reason": "Daily active tester on-chain ping qualifies wallet for upcoming L1/L2 airdrop snapshots"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:33:20",
+    "source": "Tron / BSC Faucet Scanner",
+    "network": "Tron Network",
+    "wallet": "TF2w8pfN2QfXP31ZG2Ju5K4fXVEtA8X33u",
+    "status": "ACTIVE",
+    "detail": "Address queued in Telegram tipper & faucet pool",
+    "reason": "Actively waiting for Telegram tipping bot drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:33:20",
+    "source": "Automated Base / EVM Dispatcher",
+    "network": "Base / Ethereum",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "MONITORED",
+    "detail": "Wallet auto-registered for gas distributions & airdrop drops",
+    "reason": "Listening for official mainnet airdrop claims"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:33:20",
+    "source": "Live Scraper (GTBTC)",
+    "network": "Bitcoin (Restaked BTC)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: GTBTC",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:33:20",
+    "source": "Live Scraper (Bitunix)",
+    "network": "Multi-Chain (CEX)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: Bitunix",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:33:18",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "FPYvcBK6j5z6diQhT6KaFEX5AVP7kbEiEQjiM3bvbEZP",
+    "status": "MONITORED",
+    "detail": "Queued for next faucet cycle (balance: 0 SOL)",
+    "reason": "Address monitored for upcoming devnet faucet drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:33:17",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Verified On-Chain: 10.0 SOL in Phantom",
+    "reason": "Tokens successfully received and verified on-chain via Solana RPC"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:32:17",
+    "source": "DePIN Network (Grass Node)",
+    "network": "Solana Mainnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "ACTIVE",
+    "detail": "Shared Uptime Heartbeat: +15 Grass Points (Total: 420)",
+    "reason": "Passive bandwidth sharing background node linked to Phantom Solana wallet"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:32:17",
+    "source": "Tron / BSC Faucet Scanner",
+    "network": "Tron Network",
+    "wallet": "TF2w8pfN2QfXP31ZG2Ju5K4fXVEtA8X33u",
+    "status": "ACTIVE",
+    "detail": "Address queued in Telegram tipper & faucet pool",
+    "reason": "Actively waiting for Telegram tipping bot drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:32:17",
+    "source": "Automated Base / EVM Dispatcher",
+    "network": "Base / Ethereum",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "MONITORED",
+    "detail": "Wallet auto-registered for gas distributions & airdrop drops",
+    "reason": "Listening for official mainnet airdrop claims"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:32:17",
+    "source": "Live Scraper (RockawayX)",
+    "network": "Multi-Chain (Risk Curators)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: RockawayX",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:32:17",
+    "source": "Live Scraper (Forward Industries SOL)",
+    "network": "Solana (Liquid Staking)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: Forward Industries SOL",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:32:15",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "FPYvcBK6j5z6diQhT6KaFEX5AVP7kbEiEQjiM3bvbEZP",
+    "status": "MONITORED",
+    "detail": "Queued for next faucet cycle (balance: 0 SOL)",
+    "reason": "Address monitored for upcoming devnet faucet drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:32:14",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Verified On-Chain: 10.0 SOL in Phantom",
+    "reason": "Tokens successfully received and verified on-chain via Solana RPC"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:31:14",
+    "source": "Tron / BSC Faucet Scanner",
+    "network": "Tron Network",
+    "wallet": "TF2w8pfN2QfXP31ZG2Ju5K4fXVEtA8X33u",
+    "status": "ACTIVE",
+    "detail": "Address queued in Telegram tipper & faucet pool",
+    "reason": "Actively waiting for Telegram tipping bot drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:31:14",
+    "source": "Automated Base / EVM Dispatcher",
+    "network": "Base / Ethereum",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "MONITORED",
+    "detail": "Wallet auto-registered for gas distributions & airdrop drops",
+    "reason": "Listening for official mainnet airdrop claims"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:31:14",
+    "source": "Live Scraper (CIAN Yield Layer)",
+    "network": "Multi-Chain (Yield Aggregator)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: CIAN Yield Layer",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:31:14",
+    "source": "Live Scraper (Symbiotic)",
+    "network": "Ethereum (Collateral Markets)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: Symbiotic",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:31:11",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "FPYvcBK6j5z6diQhT6KaFEX5AVP7kbEiEQjiM3bvbEZP",
+    "status": "MONITORED",
+    "detail": "Queued for next faucet cycle (balance: 0 SOL)",
+    "reason": "Address monitored for upcoming devnet faucet drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:31:11",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Verified On-Chain: 10.0 SOL in Phantom",
+    "reason": "Tokens successfully received and verified on-chain via Solana RPC"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:30:10",
+    "source": "DePIN Network (Grass Node)",
+    "network": "Solana Mainnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "ACTIVE",
+    "detail": "Shared Uptime Heartbeat: +15 Grass Points (Total: 405)",
+    "reason": "Passive bandwidth sharing background node linked to Phantom Solana wallet"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:30:10",
+    "source": "Tron / BSC Faucet Scanner",
+    "network": "Tron Network",
+    "wallet": "TF2w8pfN2QfXP31ZG2Ju5K4fXVEtA8X33u",
+    "status": "ACTIVE",
+    "detail": "Address queued in Telegram tipper & faucet pool",
+    "reason": "Actively waiting for Telegram tipping bot drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:30:10",
+    "source": "Automated Base / EVM Dispatcher",
+    "network": "Base / Ethereum",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "MONITORED",
+    "detail": "Wallet auto-registered for gas distributions & airdrop drops",
+    "reason": "Listening for official mainnet airdrop claims"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:30:10",
+    "source": "Live Scraper (OnRe)",
+    "network": "Solana (RWA)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: OnRe",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:30:10",
+    "source": "Live Scraper (RocketSwap Anubis)",
+    "network": "Anubis (Dexs)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: RocketSwap Anubis",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:30:07",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "FPYvcBK6j5z6diQhT6KaFEX5AVP7kbEiEQjiM3bvbEZP",
+    "status": "MONITORED",
+    "detail": "Queued for next faucet cycle (balance: 0 SOL)",
+    "reason": "Address monitored for upcoming devnet faucet drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:30:07",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Verified On-Chain: 10.0 SOL in Phantom",
+    "reason": "Tokens successfully received and verified on-chain via Solana RPC"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:29:07",
+    "source": "Tron / BSC Faucet Scanner",
+    "network": "Tron Network",
+    "wallet": "TF2w8pfN2QfXP31ZG2Ju5K4fXVEtA8X33u",
+    "status": "ACTIVE",
+    "detail": "Address queued in Telegram tipper & faucet pool",
+    "reason": "Actively waiting for Telegram tipping bot drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:29:07",
+    "source": "Automated Base / EVM Dispatcher",
+    "network": "Base / Ethereum",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "MONITORED",
+    "detail": "Wallet auto-registered for gas distributions & airdrop drops",
+    "reason": "Listening for official mainnet airdrop claims"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:29:07",
+    "source": "Live Scraper (World Chain Bridge)",
+    "network": "Ethereum (Canonical Bridge)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: World Chain Bridge",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:29:07",
+    "source": "Live Scraper (Bitvavo)",
+    "network": "Multi-Chain (CEX)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: Bitvavo",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:29:04",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "FPYvcBK6j5z6diQhT6KaFEX5AVP7kbEiEQjiM3bvbEZP",
+    "status": "MONITORED",
+    "detail": "Queued for next faucet cycle (balance: 0 SOL)",
+    "reason": "Address monitored for upcoming devnet faucet drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:29:04",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Verified On-Chain: 10.0 SOL in Phantom",
+    "reason": "Tokens successfully received and verified on-chain via Solana RPC"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:28:03",
+    "source": "Daily Airdrop Interaction Ping",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Interaction Recorded at Slot #518223144 (Streak: 3 Days)",
+    "reason": "Daily active tester on-chain ping qualifies wallet for upcoming L1/L2 airdrop snapshots"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:28:03",
+    "source": "DePIN Network (Grass Node)",
+    "network": "Solana Mainnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "ACTIVE",
+    "detail": "Shared Uptime Heartbeat: +15 Grass Points (Total: 390)",
+    "reason": "Passive bandwidth sharing background node linked to Phantom Solana wallet"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:28:03",
+    "source": "Tron / BSC Faucet Scanner",
+    "network": "Tron Network",
+    "wallet": "TF2w8pfN2QfXP31ZG2Ju5K4fXVEtA8X33u",
+    "status": "ACTIVE",
+    "detail": "Address queued in Telegram tipper & faucet pool",
+    "reason": "Actively waiting for Telegram tipping bot drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:28:03",
+    "source": "Automated Base / EVM Dispatcher",
+    "network": "Base / Ethereum",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "MONITORED",
+    "detail": "Wallet auto-registered for gas distributions & airdrop drops",
+    "reason": "Listening for official mainnet airdrop claims"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:28:03",
+    "source": "Live Scraper (Nexus BTC)",
+    "network": "Bitcoin (Bridge)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: Nexus BTC",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:28:03",
+    "source": "Live Scraper (Defi Saver Asset Management)",
+    "network": "Multi-Chain (CDP Manager)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: Defi Saver Asset Management",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:28:01",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "FPYvcBK6j5z6diQhT6KaFEX5AVP7kbEiEQjiM3bvbEZP",
+    "status": "MONITORED",
+    "detail": "Queued for next faucet cycle (balance: 0 SOL)",
+    "reason": "Address monitored for upcoming devnet faucet drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:28:00",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Verified On-Chain: 10.0 SOL in Phantom",
+    "reason": "Tokens successfully received and verified on-chain via Solana RPC"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:27:00",
+    "source": "Tron / BSC Faucet Scanner",
+    "network": "Tron Network",
+    "wallet": "TF2w8pfN2QfXP31ZG2Ju5K4fXVEtA8X33u",
+    "status": "ACTIVE",
+    "detail": "Address queued in Telegram tipper & faucet pool",
+    "reason": "Actively waiting for Telegram tipping bot drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:27:00",
+    "source": "Automated Base / EVM Dispatcher",
+    "network": "Base / Ethereum",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "MONITORED",
+    "detail": "Wallet auto-registered for gas distributions & airdrop drops",
+    "reason": "Listening for official mainnet airdrop claims"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:27:00",
+    "source": "Live Scraper (Polymarket International)",
+    "network": "Polygon (Prediction Market)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: Polymarket International",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:27:00",
+    "source": "Live Scraper (Bittensor dTAO)",
+    "network": "Bittensor (Dexs)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: Bittensor dTAO",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:26:57",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "FPYvcBK6j5z6diQhT6KaFEX5AVP7kbEiEQjiM3bvbEZP",
+    "status": "MONITORED",
+    "detail": "Queued for next faucet cycle (balance: 0 SOL)",
+    "reason": "Address monitored for upcoming devnet faucet drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:26:57",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Verified On-Chain: 10.0 SOL in Phantom",
+    "reason": "Tokens successfully received and verified on-chain via Solana RPC"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:25:57",
+    "source": "DePIN Network (Grass Node)",
+    "network": "Solana Mainnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "ACTIVE",
+    "detail": "Shared Uptime Heartbeat: +15 Grass Points (Total: 375)",
+    "reason": "Passive bandwidth sharing background node linked to Phantom Solana wallet"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:25:57",
+    "source": "Tron / BSC Faucet Scanner",
+    "network": "Tron Network",
+    "wallet": "TF2w8pfN2QfXP31ZG2Ju5K4fXVEtA8X33u",
+    "status": "ACTIVE",
+    "detail": "Address queued in Telegram tipper & faucet pool",
+    "reason": "Actively waiting for Telegram tipping bot drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:25:56",
+    "source": "Automated Base / EVM Dispatcher",
+    "network": "Base / Ethereum",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "MONITORED",
+    "detail": "Wallet auto-registered for gas distributions & airdrop drops",
+    "reason": "Listening for official mainnet airdrop claims"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:25:56",
+    "source": "Live Scraper (Upshift)",
+    "network": "Multi-Chain (Onchain Capital Allocator)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: Upshift",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:25:56",
+    "source": "Live Scraper (Coinbase Wrapped Staked ETH)",
+    "network": "Ethereum (Liquid Staking)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: Coinbase Wrapped Staked ETH",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:25:54",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "FPYvcBK6j5z6diQhT6KaFEX5AVP7kbEiEQjiM3bvbEZP",
+    "status": "MONITORED",
+    "detail": "Queued for next faucet cycle (balance: 0 SOL)",
+    "reason": "Address monitored for upcoming devnet faucet drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:25:53",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Verified On-Chain: 10.0 SOL in Phantom",
+    "reason": "Tokens successfully received and verified on-chain via Solana RPC"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:24:53",
+    "source": "Tron / BSC Faucet Scanner",
+    "network": "Tron Network",
+    "wallet": "TF2w8pfN2QfXP31ZG2Ju5K4fXVEtA8X33u",
+    "status": "ACTIVE",
+    "detail": "Address queued in Telegram tipper & faucet pool",
+    "reason": "Actively waiting for Telegram tipping bot drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:24:53",
+    "source": "Automated Base / EVM Dispatcher",
+    "network": "Base / Ethereum",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "MONITORED",
+    "detail": "Wallet auto-registered for gas distributions & airdrop drops",
+    "reason": "Listening for official mainnet airdrop claims"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:24:53",
+    "source": "Live Scraper (Korbit)",
+    "network": "Multi-Chain (CEX)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: Korbit",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:24:53",
+    "source": "Live Scraper (Indodax)",
+    "network": "Multi-Chain (CEX)",
+    "wallet": "0x2De39611abB941664027a3a0cb5cD7228e9c9f8d",
+    "status": "ACTIVE",
+    "detail": "Auto-mapped wallet to tokenless protocol: Indodax",
+    "reason": "Discovered from DefiLlama tokenless directory; queued for retroactive airdrop distribution"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:24:50",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "FPYvcBK6j5z6diQhT6KaFEX5AVP7kbEiEQjiM3bvbEZP",
+    "status": "MONITORED",
+    "detail": "Queued for next faucet cycle (balance: 0 SOL)",
+    "reason": "Address monitored for upcoming devnet faucet drops"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:24:50",
+    "source": "Solana Devnet Watcher",
+    "network": "Solana Devnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "CLAIMED",
+    "detail": "Verified On-Chain: 10.0 SOL in Phantom",
+    "reason": "Tokens successfully received and verified on-chain via Solana RPC"
+  },
+  {
+    "id": 201,
+    "timestamp": "2026-11-03 18:23:50",
+    "source": "DePIN Network (Grass Node)",
+    "network": "Solana Mainnet",
+    "wallet": "c4Nc4Sihyi9Gt16mGAo6HJBVBYTmAZcsBqGjHMVAL8a",
+    "status": "ACTIVE",
+    "detail": "Shared Uptime Heartbeat: +15 Grass Points (Total: 360)",
+    "reason": "Passive bandwidth sharing background node linked to Phantom Solana wallet"
   }
 ]

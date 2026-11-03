@@ -101,3 +101,4 @@ class SolanaDevnetAutonomousWorker:
             }
 
 solana_worker = SolanaDevnetAutonomousWorker()
+
