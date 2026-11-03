@@ -3,30 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Binance Red Packet Radar</title>
+  <title>Crypto Radar & Zero-Cost Earning Hub</title>
   <style>
     :root {
       --bg: #0b0e11;
       --card-bg: #181a20;
+      --card-hover: #1e2329;
       --text: #eaecef;
       --text-muted: #848e9c;
       --yellow: #f0b90b;
       --green: #0ecb81;
       --red: #f6465d;
-      --blue: #1e88e5;
+      --blue: #2f80ed;
+      --purple: #9b51e0;
       --border: #2b313a;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { background-color: var(--bg); color: var(--text); padding: 24px; }
-    
+
+    /* Top Header */
     .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 16px; flex-wrap: wrap; gap: 12px; }
     .title { font-size: 22px; font-weight: bold; color: var(--yellow); display: flex; align-items: center; gap: 8px; }
     
+    /* Navigation Tabs */
+    .tabs-nav { display: flex; gap: 10px; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 8px; overflow-x: auto; }
+    .tab-btn { background: #1b2028; border: 1px solid var(--border); color: var(--text-muted); padding: 10px 20px; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px; }
+    .tab-btn:hover { color: #fff; background: #222934; }
+    .tab-btn.active { background: #262c35; border-color: var(--yellow); color: var(--yellow); box-shadow: 0 0 10px rgba(240, 185, 11, 0.15); }
+    .tab-btn .badge-count { background: var(--yellow); color: #000; font-size: 11px; padding: 2px 7px; border-radius: 10px; font-weight: 800; }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Common Components */
     .status-badge { background: #202630; padding: 8px 16px; border-radius: 20px; font-size: 13px; color: var(--green); display: flex; align-items: center; gap: 8px; border: 1px solid var(--border); }
     .dot { width: 10px; height: 10px; background: var(--green); border-radius: 50%; animation: pulse 1.2s infinite; }
     @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(0.8); } }
     
-    /* Live Banners */
     .banner-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
     @media (max-width: 800px) { .banner-grid { grid-template-columns: 1fr; } }
 
@@ -38,13 +51,11 @@
     .scanner-text span { color: var(--yellow); font-weight: 600; }
     .scanner-meta { font-size: 12px; color: var(--text-muted); }
 
-    /* New Channels Joined Feed */
     .join-banner { background: #162436; border: 1px solid #1e3a5f; border-radius: 8px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
     .join-left { display: flex; align-items: center; gap: 10px; }
     .join-text { font-size: 13px; }
     .join-text span { color: #64b5f6; font-weight: 600; }
 
-    /* Channels Tags Box */
     .channels-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; margin-bottom: 20px; }
     .channels-header { font-size: 12px; font-weight: bold; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: flex; justify-content: space-between; }
     .channel-tags { display: flex; flex-wrap: wrap; gap: 6px; max-height: 100px; overflow-y: auto; }
@@ -56,22 +67,22 @@
     .stat-card { background: var(--card-bg); padding: 16px; border-radius: 8px; border: 1px solid var(--border); }
     .stat-title { color: var(--text-muted); font-size: 12px; margin-bottom: 4px; text-transform: uppercase; }
     .stat-val { font-size: 22px; font-weight: bold; }
-    
+
     .table-container { background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border); overflow: hidden; }
     table { width: 100%; border-collapse: collapse; text-align: left; }
     th { background: #202630; padding: 14px; font-size: 13px; color: var(--text-muted); text-transform: uppercase; border-bottom: 1px solid var(--border); }
     td { padding: 14px; border-bottom: 1px solid var(--border); font-size: 14px; }
     tr:hover { background: #1e2329; }
-    
+
     .code-chip { font-family: monospace; font-size: 16px; font-weight: bold; color: var(--yellow); background: #2b313a; padding: 4px 10px; border-radius: 4px; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 8px; }
     .copy-btn { cursor: pointer; font-size: 12px; background: #3b424e; border: none; color: #fff; padding: 3px 8px; border-radius: 4px; font-weight: 500; }
     .copy-btn:hover { background: var(--yellow); color: #000; }
-    
+
     .badge { padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; display: inline-block; }
     .badge-PENDING { background: rgba(240, 185, 11, 0.15); color: var(--yellow); }
     .badge-CLAIMED { background: rgba(14, 203, 129, 0.15); color: var(--green); }
     .badge-INVALID { background: rgba(246, 70, 93, 0.15); color: var(--red); }
-    
+
     .actions { display: flex; gap: 8px; }
     .btn { cursor: pointer; border: none; border-radius: 4px; padding: 6px 12px; font-size: 12px; font-weight: bold; transition: 0.2s; }
     .btn-claim { background: var(--green); color: #000; }
@@ -80,102 +91,319 @@
     .btn-invalid:hover { opacity: 0.85; }
     .btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
-    .toast { position: fixed; bottom: 20px; right: 20px; background: var(--yellow); color: #000; padding: 10px 18px; border-radius: 6px; font-weight: bold; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+    /* Hub Card Grid */
+    .hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; margin-bottom: 24px; }
+    .hub-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.2s, border-color 0.2s; }
+    .hub-card:hover { transform: translateY(-3px); border-color: var(--yellow); background: var(--card-hover); }
+    .hub-top { margin-bottom: 16px; }
+    .hub-tag { font-size: 11px; font-weight: bold; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; margin-bottom: 10px; display: inline-block; }
+    .tag-airdrop { background: rgba(47, 128, 237, 0.15); color: #64b5f6; }
+    .tag-task { background: rgba(14, 203, 129, 0.15); color: var(--green); }
+    .tag-bounty { background: rgba(155, 81, 224, 0.15); color: #bb86fc; }
+    .hub-title { font-size: 18px; font-weight: bold; margin-bottom: 8px; color: #fff; display: flex; align-items: center; justify-content: space-between; }
+    .hub-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px; }
+    .hub-steps { background: #13151b; border-radius: 6px; padding: 12px; font-size: 12px; color: #c0c6d0; line-height: 1.6; margin-bottom: 14px; border: 1px solid #232832; }
+    .hub-steps strong { color: var(--yellow); }
+    .hub-action { display: flex; justify-content: space-between; align-items: center; }
+    .hub-reward { font-size: 13px; font-weight: 700; color: var(--green); }
+    .hub-link { background: var(--yellow); color: #000; text-decoration: none; font-weight: bold; font-size: 13px; padding: 8px 16px; border-radius: 6px; transition: opacity 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+    .hub-link:hover { opacity: 0.85; }
+
+    .toast { position: fixed; bottom: 20px; right: 20px; background: var(--yellow); color: #000; padding: 10px 18px; border-radius: 6px; font-weight: bold; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.4); z-index: 1000; }
   </style>
 </head>
 <body>
   <div class="header">
     <div class="title">
-      <span>🎁 Binance Red Packet Radar</span>
+      <span>⚡ Crypto Radar & Zero-Cost Earning Hub</span>
     </div>
     <div class="status-badge">
       <div class="dot" id="pulseDot"></div>
-      <span id="scannerStatus">Discovering & Connecting...</span>
+      <span id="scannerStatus">Radar Running in Background...</span>
     </div>
   </div>
 
-  <div class="banner-grid">
-    <!-- Message Scanning Bar -->
-    <div class="scanner-banner">
-      <div class="scanner-left">
-        <div class="radar-icon">📡</div>
-        <div class="scanner-text">
-          Messages Inspected: <span id="messagesCount">0</span>
+  <!-- Navigation Tabs -->
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('tab-radar', this)">
+      <span>🎁 Telegram Red Packet Radar</span>
+      <span class="badge-count" id="tabCodeCount">0</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('tab-airdrops', this)">
+      <span>🪂 Testnet Airdrops & Guides ($50 – $1,000+)</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('tab-tasks', this)">
+      <span>💼 Web3 Tasks, Faucets & Bounties ($10 – $100+/mo)</span>
+    </button>
+  </div>
+
+  <!-- TAB 1: TELEGRAM SCANNER -->
+  <div id="tab-radar" class="tab-content active">
+    <div class="banner-grid">
+      <div class="scanner-banner">
+        <div class="scanner-left">
+          <div class="radar-icon">📡</div>
+          <div class="scanner-text">
+            Messages Inspected: <span id="messagesCount">0</span>
+          </div>
+        </div>
+        <div class="scanner-meta">
+          Last scan: <span id="lastChannel" style="color: #fff; font-weight: 500;">-</span> (<span id="lastTime" style="color: var(--yellow);">-</span>)
         </div>
       </div>
-      <div class="scanner-meta">
-        Last message: <span id="lastChannel" style="color: #fff; font-weight: 500;">-</span> (<span id="lastTime" style="color: var(--yellow);">-</span>)
-      </div>
-    </div>
 
-    <!-- Auto-Discovery Joined Feed -->
-    <div class="join-banner">
-      <div class="join-left">
-        <div>🚀</div>
-        <div class="join-text">
-          Joined Channels: <span id="totalChannels">0</span>
+      <div class="join-banner">
+        <div class="join-left">
+          <div>🚀</div>
+          <div class="join-text">
+            Joined Channels: <span id="totalChannels">0</span>
+          </div>
+        </div>
+        <div class="scanner-meta">
+          Latest joined: <span id="lastJoined" style="color: #64b5f6; font-weight: 500;">-</span> (<span id="lastJoinedTime" style="color: #64b5f6;">-</span>)
         </div>
       </div>
-      <div class="scanner-meta">
-        Latest joined: <span id="lastJoined" style="color: #64b5f6; font-weight: 500;">-</span> (<span id="lastJoinedTime" style="color: #64b5f6;">-</span>)
+    </div>
+
+    <div class="channels-box">
+      <div class="channels-header">
+        <span>Auto-Joined Red Packet Channels & Groups</span>
+        <span style="color: var(--green);">● Live Background Crawler Active</span>
+      </div>
+      <div class="channel-tags" id="channelTags">
+        <span class="channel-tag" style="color: var(--text-muted);">Finding & joining red packet channels...</span>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-title">Total Codes Found</div>
+        <div class="stat-val" id="totalCount">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Pending</div>
+        <div class="stat-val" style="color: var(--yellow)" id="pendingCount">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Claimed</div>
+        <div class="stat-val" style="color: var(--green)" id="claimedCount">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Invalid / Expired</div>
+        <div class="stat-val" style="color: var(--red)" id="invalidCount">0</div>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Detected Code</th>
+            <th>Source Channel</th>
+            <th>Found Exact Time</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="codesBody">
+          <tr>
+            <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 30px;">
+              Scanning auto-joined channels... incoming codes will appear here in real-time.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TAB 2: TESTNET AIRDROPS -->
+  <div id="tab-airdrops" class="tab-content">
+    <div style="background: #181d26; border: 1px solid #2f3847; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+      <h3 style="color: var(--yellow); margin-bottom: 6px;">How Zero-Cost Testnet Airdrops Work:</h3>
+      <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+        You spend <strong>₹0 real money</strong>. You get free "Testnet tokens" from a faucet, interact with new blockchain apps, and when the project launches its main token, you receive free coins directly into your wallet that can be transferred to Binance and sold for INR.
+      </p>
+    </div>
+
+    <div class="hub-grid">
+      <!-- Card 1: DefiLlama -->
+      <div class="hub-card">
+        <div class="hub-top">
+          <span class="hub-tag tag-airdrop">Aggregator & Tracker</span>
+          <div class="hub-title">DefiLlama Airdrop Tracker</div>
+          <div class="hub-desc">The most respected analytics directory tracking unreleased tokens and active testnet airdrop opportunities without hype.</div>
+          <div class="hub-steps">
+            <strong>How to start:</strong><br>
+            1. Open DefiLlama Airdrops.<br>
+            2. Filter by "Tokenless Protocols".<br>
+            3. Follow step-by-step guides for free testnets.
+          </div>
+        </div>
+        <div class="hub-action">
+          <span class="hub-reward">Potential: $100 - $1,500+</span>
+          <a class="hub-link" href="https://defillama.com/airdrops" target="_blank">Open DefiLlama ↗</a>
+        </div>
+      </div>
+
+      <!-- Card 2: Airdrops.io -->
+      <div class="hub-card">
+        <div class="hub-top">
+          <span class="hub-tag tag-airdrop">Beginner Friendly</span>
+          <div class="hub-title">Airdrops.io Portal</div>
+          <div class="hub-desc">Hand-curated repository of active, potential, and zero-investment retroactive testnet airdrops with complete checklists.</div>
+          <div class="hub-steps">
+            <strong>How to start:</strong><br>
+            1. Click the "Potential Airdrops" or "Testnet" tab.<br>
+            2. Follow the numbered tasks (testnet faucets, swaps).<br>
+            3. Bookmark completed tasks.
+          </div>
+        </div>
+        <div class="hub-action">
+          <span class="hub-reward">Cost: ₹0 (Testnet only)</span>
+          <a class="hub-link" href="https://airdrops.io/speculative/" target="_blank">Open Airdrops.io ↗</a>
+        </div>
+      </div>
+
+      <!-- Card 3: Layer3 -->
+      <div class="hub-card">
+        <div class="hub-top">
+          <span class="hub-tag tag-airdrop">Interactive Quests</span>
+          <div class="hub-title">Layer3.xyz Quests</div>
+          <div class="hub-desc">Interactive web3 quest platform. Guides you click-by-click through new crypto ecosystems and rewards you with XP, CUBEs, and tokens.</div>
+          <div class="hub-steps">
+            <strong>How to start:</strong><br>
+            1. Connect MetaMask or Coinbase Wallet.<br>
+            2. Filter quests by "Free / Testnet".<br>
+            3. Earn on-chain credentials for upcoming airdrops.
+          </div>
+        </div>
+        <div class="hub-action">
+          <span class="hub-reward">Reward: Tokens + Airdrops</span>
+          <a class="hub-link" href="https://layer3.xyz/" target="_blank">Start Quests ↗</a>
+        </div>
+      </div>
+
+      <!-- Card 4: Galxe -->
+      <div class="hub-card">
+        <div class="hub-top">
+          <span class="hub-tag tag-airdrop">Official Campaigns</span>
+          <div class="hub-title">Galxe (Galaxy) ID</div>
+          <div class="hub-desc">The #1 platform used by Layer-1 and Layer-2 blockchains (e.g. Linea, Berachain, Arbitrum) to track testnet participants.</div>
+          <div class="hub-steps">
+            <strong>How to start:</strong><br>
+            1. Register with your wallet & Twitter/Discord.<br>
+            2. Complete testnet tasks & claim free OAT badges.<br>
+            3. Qualify for official token distribution.
+          </div>
+        </div>
+        <div class="hub-action">
+          <span class="hub-reward">Potential: $50 - $800+</span>
+          <a class="hub-link" href="https://app.galxe.com/quest" target="_blank">Open Galxe ↗</a>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Monitored Channels Box -->
-  <div class="channels-box">
-    <div class="channels-header">
-      <span>Auto-Joined Red Packet Channels & Groups</span>
-      <span style="color: var(--green);">● Active Scanner Feeds</span>
+  <!-- TAB 3: TASKS, FAUCETS & BOUNTIES -->
+  <div id="tab-tasks" class="tab-content">
+    <div style="background: #181d26; border: 1px solid #2f3847; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+      <h3 style="color: var(--green); margin-bottom: 6px;">Micro-Tasks, Bug Bounties & Community Rewards:</h3>
+      <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+        Earn real cryptocurrency by contributing skills, reporting bugs, completing developer bounties, or participating in educational quizzes.
+      </p>
     </div>
-    <div class="channel-tags" id="channelTags">
-      <span class="channel-tag" style="color: var(--text-muted);">Finding & joining red packet channels...</span>
-    </div>
-  </div>
 
-  <div class="stats">
-    <div class="stat-card">
-      <div class="stat-title">Total Codes Found</div>
-      <div class="stat-val" id="totalCount">0</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-title">Pending</div>
-      <div class="stat-val" style="color: var(--yellow)" id="pendingCount">0</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-title">Claimed</div>
-      <div class="stat-val" style="color: var(--green)" id="claimedCount">0</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-title">Invalid / Expired</div>
-      <div class="stat-val" style="color: var(--red)" id="invalidCount">0</div>
-    </div>
-  </div>
+    <div class="hub-grid">
+      <!-- Card 1: Immunefi -->
+      <div class="hub-card">
+        <div class="hub-top">
+          <span class="hub-tag tag-bounty">Bug Bounty / Code</span>
+          <div class="hub-title">Immunefi Bug Bounties</div>
+          <div class="hub-desc">The leading Web3 security bounty platform. Pays developers and white-hats to find smart contract vulnerabilities or website logic errors.</div>
+          <div class="hub-steps">
+            <strong>How to start:</strong><br>
+            1. Register for an Immunefi researcher account.<br>
+            2. Choose active bounty programs (Web/API or Smart Contract).<br>
+            3. Submit verified findings for instant payout in USDT/USDC.
+          </div>
+        </div>
+        <div class="hub-action">
+          <span class="hub-reward">Bounties: $500 – $50,000+</span>
+          <a class="hub-link" href="https://immunefi.com/bug-bounty/" target="_blank">Open Immunefi ↗</a>
+        </div>
+      </div>
 
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>Detected Code</th>
-          <th>Source Channel</th>
-          <th>Found Exact Time</th>
-          <th>Status</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody id="codesBody">
-        <tr>
-          <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 30px;">
-            Scanning channels... incoming Red Packet codes will appear here in real-time.
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <!-- Card 2: Gitcoin -->
+      <div class="hub-card">
+        <div class="hub-top">
+          <span class="hub-tag tag-task">Community & Grants</span>
+          <div class="hub-title">Gitcoin Passport & Bounties</div>
+          <div class="hub-desc">Global platform funding open-source development, community contributions, and testnet verification tasks in Web3.</div>
+          <div class="hub-steps">
+            <strong>How to start:</strong><br>
+            1. Create Gitcoin Passport to establish human identity.<br>
+            2. Explore bounties, community rounds, and hackathons.<br>
+            3. Get paid directly to your crypto wallet.
+          </div>
+        </div>
+        <div class="hub-action">
+          <span class="hub-reward">Earnings: $25 – $250 / task</span>
+          <a class="hub-link" href="https://www.gitcoin.co/" target="_blank">Open Gitcoin ↗</a>
+        </div>
+      </div>
+
+      <!-- Card 3: Binance Learn & Earn -->
+      <div class="hub-card">
+        <div class="hub-top">
+          <span class="hub-tag tag-task">Instant Binance Crediting</span>
+          <div class="hub-title">Binance Learn & Earn</div>
+          <div class="hub-desc">Official Binance program. Watch short 2-minute videos, pass a 4-question quiz, and get real crypto deposited straight to your Binance wallet.</div>
+          <div class="hub-steps">
+            <strong>How to start:</strong><br>
+            1. Open the Binance app or web portal.<br>
+            2. Go to More > Learn & Earn.<br>
+            3. Answer simple quiz questions; rewards appear in 2 hours.
+          </div>
+        </div>
+        <div class="hub-action">
+          <span class="hub-reward">Instant: $3 – $20 per quiz</span>
+          <a class="hub-link" href="https://academy.binance.com/en/learn-and-earn" target="_blank">Learn & Earn ↗</a>
+        </div>
+      </div>
+
+      <!-- Card 4: FaucetLink -->
+      <div class="hub-card">
+        <div class="hub-top">
+          <span class="hub-tag tag-airdrop">Free Testnet Gas</span>
+          <div class="hub-title">Multi-Chain Faucets (FaucetLink)</div>
+          <div class="hub-desc">Curated aggregator providing free testnet Sepolia, Holesky, and L2 test tokens required to test airdrops without spending any real money.</div>
+          <div class="hub-steps">
+            <strong>How to start:</strong><br>
+            1. Paste your public MetaMask address.<br>
+            2. Click "Claim testnet ETH".<br>
+            3. Use the free testnet funds to interact with new protocols.
+          </div>
+        </div>
+        <div class="hub-action">
+          <span class="hub-reward">Cost: Always Free ($0)</span>
+          <a class="hub-link" href="https://faucetlink.to/" target="_blank">Get Test Tokens ↗</a>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="toast" id="toast">Copied to clipboard!</div>
 
   <script>
+    // Tab switching logic
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+    }
+
     async function updateStatus() {
       try {
         const res = await fetch('/api/status');
@@ -248,6 +476,7 @@
       document.getElementById('pendingCount').innerText = pending;
       document.getElementById('claimedCount').innerText = claimed;
       document.getElementById('invalidCount').innerText = invalid;
+      document.getElementById('tabCodeCount').innerText = pending;
 
       if (!items.length) {
         tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color: var(--text-muted); padding: 30px;">Scanning auto-joined channels... incoming codes will appear here in real-time.</td></tr>`;
@@ -275,6 +504,7 @@
       `).join('');
     }
 
+    // Continuous polling in the background regardless of which tab you are on!
     updateStatus();
     fetchCodes();
     setInterval(() => {
