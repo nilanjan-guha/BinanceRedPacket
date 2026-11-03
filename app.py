@@ -20,6 +20,7 @@ from telegram_tipper import TelegramTipClaimer
 from web_scraper import WebRedPacketScraper
 from campaign_radar import BigPrizeRadar
 from binance_client import BinanceOfficialClient
+from bybit_client import BybitOfficialClient
 
 logging.basicConfig(
     level=logging.INFO,
@@ -39,7 +40,8 @@ tipper = TelegramTipClaimer("harvest_history.json")
 web_scraper = WebRedPacketScraper(storage)
 campaign_radar = BigPrizeRadar()
 binance_api = BinanceOfficialClient()
-app = FastAPI(title="Verified Crypto Radar & Ledger")
+bybit_api = BybitOfficialClient()
+app = FastAPI(title="Verified Crypto Radar & Multi-Exchange Hub")
 
 TARGET_KEYWORDS = [
     "binance", "red packet", "redpacket", "cryptobox", "crypto box", 
@@ -111,6 +113,13 @@ async def get_binance_account():
     return {
         "status": binance_api.get_account_status(),
         "funding_assets": binance_api.get_funding_wallet_balance()
+    }
+
+@app.get("/api/bybit/status")
+async def get_bybit_account():
+    return {
+        "status": bybit_api.get_account_status(),
+        "assets": bybit_api.get_wallet_balances()
     }
 
 @app.post("/api/trigger-harvest")
