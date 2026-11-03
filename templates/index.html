@@ -212,12 +212,13 @@
               <th>Network / Source</th>
               <th>Target Wallet</th>
               <th>Status</th>
+              <th>Reason / Why</th>
               <th>Timestamp</th>
             </tr>
           </thead>
           <tbody id="harvestBody">
             <tr>
-              <td colspan="4" style="text-align: center; color: var(--text-muted); padding: 30px;">
+              <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 30px;">
                 Auto-claiming cycle in progress...
               </td>
             </tr>
@@ -265,7 +266,7 @@
         const items = await res.json();
         const tbody = document.getElementById('harvestBody');
         if (!items || !items.length) {
-          tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--text-muted); padding: 30px;">Auto-claiming cycle running in background...</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color: var(--text-muted); padding: 30px;">Auto-claiming cycle running in background...</td></tr>`;
           return;
         }
         tbody.innerHTML = items.map(i => `
@@ -277,9 +278,12 @@
             <td><code style="color: #64b5f6; font-size: 11px;">${i.wallet.slice(0, 6)}...${i.wallet.slice(-4)}</code></td>
             <td>
               <span class="badge badge-${i.status}">${i.status}</span>
-              <div style="font-size: 10px; color: var(--text-muted);">${i.detail || ''}</div>
+              <div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">${i.detail || ''}</div>
             </td>
-            <td style="color: var(--text-muted); font-size: 11px;">${i.timestamp}</td>
+            <td style="color: #e2e8f0; font-size: 11px; max-width: 200px; line-height: 1.4;">
+              ${i.reason || 'Standard automated cycle'}
+            </td>
+            <td style="color: var(--text-muted); font-size: 11px; white-space: nowrap;">${i.timestamp}</td>
           </tr>
         `).join('');
       } catch (e) {
