@@ -1,9 +1,0 @@
-file 'C:\Nagarro\MyCreations\Binance\video_frames\slide_0.png'
-duration 4
-file 'C:\Nagarro\MyCreations\Binance\video_frames\slide_1.png'
-duration 4
-file 'C:\Nagarro\MyCreations\Binance\video_frames\slide_2.png'
-duration 4
-file 'C:\Nagarro\MyCreations\Binance\video_frames\slide_3.png'
-duration 4
-file 'C:\Nagarro\MyCreations\Binance\video_frames\slide_3.png'

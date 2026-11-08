@@ -1,53 +1,28 @@
-# Binance Crypto Box / Red Packet Automated Claimer
+# Binance & KuCoin Live Signal Scanner & Market Confluence Engine
 
-This project implements an automated listener and claimer for Binance Crypto Box / Red Packet codes shared across Telegram groups and channels.
+A real-time crypto scanner and pair trading dashboard powered by FastAPI, Binance, and KuCoin APIs.
 
----
+## Features
+- **Dual Exchange Support**: Toggle between Binance and KuCoin live data.
+- **Pre-Breakout Coiling Scanner**: Detects stealth compression setups before high-volatility moves using Level 2 depth imbalances (bid/ask walls) and taker flow.
+- **Top Long & Short Rankings**: Sorted high-to-low with target TP (+5.2%) and SL (-2.4%) levels.
+- **Order Flow & Depth Inspector**: Real-time order book and executed taker trade feed.
+- **Active Trade Tracker**: Locks and persists trade entry price, PnL, and targets across scans.
 
-## 🏗 Project Architecture
+## Setup & Running
 
-- **`extractor.py`**: High-accuracy regex extraction for 8-character codes (`BPxxxxxx` or alphanumeric) with heuristic filters to drop false positives (dictionary words, pure text).
-- **`claimer.py`**: Playwright browser automation with a persistent user data profile (`binance_browser_profile/`). Keeps your login session, 2FA, and cookies active without needing to re-login every time.
-- **`bot.py`**: Telethon real-time Telegram listener connected to an asynchronous FIFO claim queue.
-- **`test_extractor.py`**: Verification script to validate code extraction against sample messages.
+1. **Install Dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
----
+2. **Configure Environment** (Optional for private endpoints):
+   ```bash
+   copy .env.example .env
+   ```
 
-## 🚀 Setup Instructions
-
-### 1. Install Dependencies
-Make sure you have Python 3.10+ installed:
-```powershell
-pip install -r requirements.txt
-playwright install chromium
-```
-
-### 2. Configure Telegram Credentials
-1. Visit [https://my.telegram.org](https://my.telegram.org) and log in.
-2. Go to **API development tools** and create an app to obtain your `api_id` and `api_hash`.
-3. Create a `.env` file from `.env.example`:
-```powershell
-copy .env.example .env
-```
-4. Fill in `.env`:
-```ini
-TELEGRAM_API_ID=12345678
-TELEGRAM_API_HASH=your_api_hash_here
-TELEGRAM_PHONE=+1234567890
-
-# Optional: List specific channels/usernames separated by comma.
-# If empty, all chats your Telegram user is in will be monitored.
-TARGET_CHANNELS=some_box_channel,crypto_giveaways
-```
-
-### 3. First-Time Setup: Log in to Binance
-1. Run `python bot.py`.
-2. A Chromium browser window will open up and navigate to the Binance Crypto Box redemption page.
-3. Log in to your Binance account manually in that opened browser window and complete any 2FA/email prompts.
-4. Because `CHROME_PROFILE_DIR=./binance_browser_profile` is configured, your session cookies and login will be saved on your machine. Subsequent runs will remain logged in automatically.
-
----
-
-## ⚠️ Important Disclaimer
-Automated claiming violates Binance terms of service and may trigger Cloudflare bot protections, CAPTCHA challenges, or account restrictions. Use responsibly and at your own risk.
-
+3. **Start the Dashboard**:
+   ```bash
+   python -m uvicorn app:app --host 127.0.0.1 --port 8000
+   ```
+   Open `http://127.0.0.1:8000` in your browser.
